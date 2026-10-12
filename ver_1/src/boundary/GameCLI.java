@@ -9,17 +9,19 @@ import staff.StaffAction;
 import java.util.List;
 import java.util.Scanner;
 
-/** Command-line boundary: shows state and collects the manager's choices. No game rules live here. */
+// Command-line boundary: shows state and collects the manager's choices. No game rules live here. 
 public class GameCLI {
     private final GameController controller;
     private final InputValidator validator = new InputValidator();
     private final Scanner in;
-
+    // controller: game controller to drive
+    // in: source of player input
     public GameCLI(GameController controller, Scanner in) {
         this.controller = controller;
         this.in = in;
     }
 
+    // Runs the main game loop until the game ends, then shows the result
     public void run() {
         GameConfig cfg = controller.getConfig();
         System.out.println("=== Restaurant Rush ===");
@@ -39,7 +41,9 @@ public class GameCLI {
         showResult(controller.getResult());
     }
 
-    /** Re-prompts until the chosen action succeeds, so a failed choice never uses up the task. */
+    // Re-prompts until the chosen action succeeds, so a failed choice never uses up the task
+    // role: display name of the staff member
+    // isWaiter: true for waiter, false for chef
     private void runStaffStep(String role, boolean isWaiter) {
         while (true) {
             List<StaffAction> options = isWaiter ? controller.waiterOptions() : controller.chefOptions();
@@ -50,6 +54,7 @@ public class GameCLI {
         }
     }
 
+    // Prints turn number, revenue, waiting queue and table occupancy
     private void showTurnState(GameSnapshot s) {
         System.out.println();
         System.out.println("==================== TURN " + s.turn() + " / " + s.maxTurns() + " ====================");
@@ -66,6 +71,7 @@ public class GameCLI {
         }
     }
 
+    // Lists the options and reads a valid choice
     private StaffAction promptAction(String role, List<StaffAction> options) {
         System.out.println(role + " - choose one task:");
         for (int i = 0; i < options.size(); i++) {
@@ -74,6 +80,7 @@ public class GameCLI {
         return options.get(validator.readChoice(in, 1, options.size()) - 1);
     }
 
+    // Prints end-of-turn events and a summary of key stats
     private void showEndOfTurn(List<String> events, GameSnapshot s) {
         events.forEach(e -> System.out.println("  * " + e));
         System.out.printf("End of turn %d: served %d | unhappy departures %d | revenue %s | avg satisfaction %s | turns used %d/%d%n",
@@ -81,6 +88,7 @@ public class GameCLI {
                 s.turn(), s.maxTurns());
     }
 
+    // Prints final stats and whether the player won or lost
     private void showResult(GameResult r) {
         GameSnapshot s = controller.snapshot();
         System.out.println();
@@ -90,15 +98,18 @@ public class GameCLI {
         System.out.println(r == GameResult.VICTORY ? "*** VICTORY! ***" : "*** DEFEAT ***");
     }
 
+    // Formats a customer as id, state, satisfaction and order (if any)
     private String describe(CustomerView c) {
         String order = c.orderItem() == null ? "" : ", order " + c.orderItem() + " " + c.orderStatus();
         return "C" + c.id() + " [" + c.state() + "] satisfaction " + c.satisfaction() + order;
     }
 
+    // Returns average satisfaction to 1dp or "N/A" if no one has paid yet
     private String formatAvg(GameSnapshot s) {
         return s.avgSatisfaction().isPresent() ? String.format("%.1f", s.avgSatisfaction().getAsDouble()) : "N/A";
     }
 
+    // Coverts cents to a "$x.yy" string
     private String formatMoney(int cents) {
         return String.format("$%d.%02d", cents / 100, cents % 100);
     }

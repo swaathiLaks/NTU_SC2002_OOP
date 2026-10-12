@@ -9,41 +9,50 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/** Owns the restaurant state. Collections are private and only changed through these methods. */
+// Owns the restaurant state. Collections are private and only changed through these methods
 public class Restaurant {
     private final List<Table> tables = new ArrayList<>();
+    // Customers without a table, in arrival order
     private final List<Customer> waitingQueue = new ArrayList<>();
+    // Every order placed this game
     private final List<Order> orders = new ArrayList<>();
+    // Oldest first for the cashier
     private final Deque<Customer> readyToPay = new ArrayDeque<>();
+    // All customers by ID, in arrival order
     private final Map<Integer, Customer> customers = new LinkedHashMap<>();
     private final Menu menu = new Menu();
     private final Statistics stats = new Statistics();
     private int nextOrderId = 1;
     private int currentTurn;
 
+    // tableCount: number of tables, numbered from 1
     public Restaurant(int tableCount) {
         for (int i = 1; i <= tableCount; i++) tables.add(new Table(i));
     }
 
+    // Records the current turn, used to timestamp serving and payment
     public void startTurn(int turn) { currentTurn = turn; }
     public int getCurrentTurn() { return currentTurn; }
 
+    // Registers a new customer and adds them to the back of the queue
     public void addToQueue(Customer c) {
         customers.put(c.getId(), c);
         waitingQueue.add(c);
     }
 
+    // Returns the lowest-numbered free table, or empty if all are taken
     public Optional<Table> findFreeTable() {
         return tables.stream().filter(Table::isFree).findFirst();
     }
 
+    // Moves a customer from the queue to a table
     public void seatCustomer(Customer c, Table t) {
         waitingQueue.remove(c);
         t.seat(c);
         c.setState(CustomerState.SEATED);
     }
 
-    /** The customer chooses their own food; the price is locked here. */
+    // The customer chooses their own food; the price is locked here
     public Order placeOrder(Customer c) {
         MenuItem item = c.chooseItem(menu);
         Order order = new Order(nextOrderId++, c, item, c.priceFor(item.getPriceCents()));
@@ -53,18 +62,20 @@ public class Restaurant {
         return order;
     }
 
+    // Delivers a READY order to its customer and counts them as served
     public void serve(Order order) {
         order.markServed();
         order.getCustomer().markServed(currentTurn);
         stats.recordServed();
     }
 
+    // Marks a customer as done eating and adds them to the back of the payment queue
     public void markReadyToPay(Customer c) {
         c.markReadyToPay(currentTurn);
         readyToPay.addLast(c);
     }
 
-    /** Takes a paid or departing customer out of every queue and frees their table. */
+    // Takes a paid or departing customer out of every queue and frees their table
     public void removeCustomer(Customer c) {
         waitingQueue.remove(c);
         readyToPay.remove(c);
@@ -73,13 +84,14 @@ public class Restaurant {
         }
     }
 
-    /** Customers still in the restaurant, in arrival order. */
+    // Customers still in the restaurant, in arrival order
     public List<Customer> getActiveCustomers() {
         return customers.values().stream()
                 .filter(c -> c.getState() != CustomerState.PAID && c.getState() != CustomerState.LEFT)
                 .toList();
     }
 
+    // Read-only views of state
     public List<Table> getTables() { return Collections.unmodifiableList(tables); }
     public List<Customer> getWaitingQueue() { return Collections.unmodifiableList(waitingQueue); }
     public List<Order> getOrders() { return Collections.unmodifiableList(orders); }
