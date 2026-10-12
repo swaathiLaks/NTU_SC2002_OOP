@@ -35,3 +35,4 @@ public class SeatAction implements StaffAction {
         r.seatCustomer(customer, table);
         return ActionResult.success("Waiter seats C" + customer.getId() + " at T" + table.getId() + ".");
     }
+}
