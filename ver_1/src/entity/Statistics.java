@@ -14,16 +14,16 @@ public class Statistics {
     // Records a completed payment
     // cents: amount paid
     // satisfaction: customer's satisfaction at payment
-    public void recordPayment(int cents, int satisfaction) {
+    void recordPayment(int cents, int satisfaction) {
         revenueCents += cents;
         paidCount++;
         satisfactionSum += satisfaction;
     }
 
     // Counts a customer whose food was delivered
-    public void recordServed() { servedCount++; }
+    void recordServed() { servedCount++; }
     // Counts a customer who left without paying
-    public void recordDeparture() { unhappyDepartures++; }
+    void recordDeparture() { unhappyDepartures++; }
 
     // Getters
     public int getRevenueCents() { return revenueCents; }

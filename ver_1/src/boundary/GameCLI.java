@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.io.Console;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 // Command-line boundary: shows state and collects the manager's choices. No game rules live here.
 public class GameCLI {
@@ -23,6 +26,9 @@ public class GameCLI {
     private static final boolean UNICODE = detectUnicode();
     private static final boolean COLOR = System.getenv("NO_COLOR") == null;
     private static final int WIDTH = UNICODE ? 84 : 74;
+    public static final String EXIT_MESSAGE = "Game exited early. No result recorded.";
+    private static final boolean INTERACTIVE = detectInteractive();
+    private static final int LOG_LINES = 8;
 
     private static final String CHECKER = UNICODE ? "▀▄" : "#=";
     private static final String HEAVY = UNICODE ? "━" : "=";
@@ -39,6 +45,17 @@ public class GameCLI {
         if (!System.getProperty("os.name", "").toLowerCase().contains("win")) return true;
         String enc = System.getProperty("stdout.encoding"); // set by Java 19+ from the console code page
         return enc != null && enc.toUpperCase().contains("UTF");
+    }
+
+    private static boolean detectInteractive() {
+        if (System.getenv("RUSH_NOCLEAR") != null) return false;
+        Console c = System.console();
+        if (c == null) return false;
+        try { // Console.isTerminal() exists on Java 22+, where console is non-null even when piped
+            return (Boolean) Console.class.getMethod("isTerminal").invoke(c);
+        } catch (ReflectiveOperationException e) {
+            return true; // Java 17-21: non-null console means a real terminal
+        }
     }
 
     private static final String RESET = "\u001B[0m";
@@ -66,16 +83,6 @@ public class GameCLI {
     private static final Map<Character, String[]> FONT_UNICODE = new HashMap<>();
     private static final Map<Character, String[]> FONT_ASCII = new HashMap<>();
     static {
-        FONT_UNICODE.put('R', new String[]{"██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██║  ██║", "╚═╝  ╚═╝"});
-        FONT_UNICODE.put('E', new String[]{"███████╗", "██╔════╝", "█████╗  ", "██╔══╝  ", "███████╗", "╚══════╝"});
-        FONT_UNICODE.put('S', new String[]{"███████╗", "██╔════╝", "███████╗", "╚════██║", "███████║", "╚══════╝"});
-        FONT_UNICODE.put('T', new String[]{"████████╗", "╚══██╔══╝", "   ██║   ", "   ██║   ", "   ██║   ", "   ╚═╝   "});
-        FONT_UNICODE.put('A', new String[]{" █████╗ ", "██╔══██╗", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"});
-        FONT_UNICODE.put('U', new String[]{"██╗   ██╗", "██║   ██║", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "});
-        FONT_UNICODE.put('N', new String[]{"███╗   ██╗", "████╗  ██║", "██╔██╗ ██║", "██║╚██╗██║", "██║ ╚████║", "╚═╝  ╚═══╝"});
-        FONT_UNICODE.put('H', new String[]{"██╗  ██╗", "██║  ██║", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"});
-        FONT_UNICODE.put(' ', new String[]{"    ", "    ", "    ", "    ", "    ", "    "});
-
         FONT_ASCII.put('R', new String[]{" ____  ", "|  _ \\ ", "| |_) |", "|  _ < ", "|_| \\_\\"});
         FONT_ASCII.put('E', new String[]{" _____ ", "| ____|", "|  _|  ", "| |___ ", "|_____|"});
         FONT_ASCII.put('S', new String[]{" ____  ", "/ ___| ", "\\___ \\ ", " ___) |", "|____/ "});
@@ -91,6 +98,7 @@ public class GameCLI {
     // Renders a word into rows of big letters (6 rows in block mode, 5 in ASCII mode)
     private static String[] render(String word) {
         String[] rows = new String[FONT.get(' ').length];
+
         Arrays.fill(rows, "");
         for (char ch : word.toCharArray()) {
             String[] glyph = FONT.get(ch);
@@ -103,6 +111,7 @@ public class GameCLI {
     private final GameController controller;
     private final InputValidator validator = new InputValidator();
     private final Scanner in;
+    private final Deque<String> log = new ArrayDeque<>();
 
     // controller: game controller to drive
     // in: source of player input
@@ -117,22 +126,42 @@ public class GameCLI {
 
     // Runs the main game loop until the game ends, then shows the result
     public void run() {
+        try {
+            playGame();
+        } catch (GameExitException e) {
+            System.out.println(paint("\n" + EXIT_MESSAGE, BOLD, YELLOW));
+        }
+    }
+
+    private void playGame() {
         GameConfig cfg = controller.getConfig();
         printBanner(cfg);
-
+        if (INTERACTIVE) {
+            System.out.print("Press Enter to start (q to quit) > ");
+            if (!in.hasNextLine() || in.nextLine().trim().equalsIgnoreCase("q")) throw new GameExitException("Player quit");
+        }
         while (!controller.isGameOver()) {
-            List<String> arrivals = controller.startTurn();
-            showTurnState(controller.snapshot(), cfg);
-            arrivals.forEach(this::printEvent);
-
+            controller.startTurn().forEach(e -> emit(formatEvent(e)));
             runStaffStep("Waiter", CYAN, true);
             runStaffStep("Chef", YELLOW, false);
-
-            showEndOfTurn(controller.endTurn(), controller.snapshot());
+            controller.endTurn().forEach(e -> emit(formatEvent(e)));
+            emit(endOfTurnLine(controller.snapshot()));
         }
         showResult(controller.getResult());
     }
 
+    // Logs a line; when scrolling (not interactive) it is also printed straight away
+    private void emit(String line) {
+        log.addLast(line);
+        while (log.size() > LOG_LINES) log.removeFirst();
+        if (!INTERACTIVE) System.out.println(line);
+    }
+
+    private void clearScreen() {
+        if (!INTERACTIVE) return;
+        System.out.print("\u001B[H\u001B[2J\u001B[3J");
+        System.out.flush();
+    }
     // banner
     private void printBanner(GameConfig cfg) {
         String checker = CHECKER.repeat(WIDTH / CHECKER.length());
@@ -140,6 +169,7 @@ public class GameCLI {
         System.out.println(paint(checker, WHITE));
         System.out.println();
 
+        System.out.println("Ver. 1");
         String[] top = render("RESTAURANT");
         for (int i = 0; i < top.length; i++) {
             int shade = top.length > 1 ? i * (FIRE.length - 1) / (top.length - 1) : 0;
@@ -180,15 +210,16 @@ public class GameCLI {
     // roleColor: colour used for the role label
     // isWaiter: true for waiter, false for chef
     private void runStaffStep(String role, String roleColor, boolean isWaiter) {
-        while (true) {
+       while (true) {
+            if (INTERACTIVE || isWaiter) showTurnState(controller.snapshot(), controller.getConfig());
             List<StaffAction> options = isWaiter ? controller.waiterOptions() : controller.chefOptions();
             StaffAction action = promptAction(role, roleColor, options);
             ActionResult result = isWaiter ? controller.applyWaiterAction(action) : controller.applyChefAction(action);
             if (result.ok()) {
-                System.out.println(paint("  [+] ", BOLD, GREEN) + result.message());
+                emit(paint("  [+] ", BOLD, GREEN) + result.message());
                 return;
             }
-            System.out.println(paint("  [-] ", BOLD, RED) + paint(result.message(), RED));
+            emit(paint("  [-] ", BOLD, RED) + paint(result.message(), RED));
         }
     }
 
@@ -208,6 +239,7 @@ public class GameCLI {
     // state display
     // Prints turn number, revenue, waiting queue and table occupancy
     private void showTurnState(GameSnapshot s, GameConfig cfg) {
+        clearScreen();
         System.out.println();
         System.out.println(paint(HEAVY.repeat(WIDTH), CYAN));
         System.out.println(paint(" TURN " + s.turn() + " / " + s.maxTurns() + "  ", BOLD, WHITE)
@@ -234,23 +266,27 @@ public class GameCLI {
             System.out.println("    " + paint("T" + t.tableId(), BOLD, WHITE) + paint(" " + VBAR + " ", GREY) + occupant);
         }
         System.out.println();
+         if (INTERACTIVE) {
+            System.out.println(paint(" RECENT EVENTS", BOLD, YELLOW));
+            if (log.isEmpty()) System.out.println("    " + paint("(none yet)", GREY));
+            log.forEach(l -> System.out.println("  " + l));
+        }
     }
 
     // Prints end-of-turn events and a summary of key stats
-    private void showEndOfTurn(List<String> events, GameSnapshot s) {
-        System.out.println();
-        events.forEach(this::printEvent);
+    private String endOfTurnLine(GameSnapshot s) {
         String unhappy = paint(String.valueOf(s.unhappyDepartures()), s.unhappyDepartures() > 0 ? RED : GREEN);
-        System.out.println(paint("  " + DASH + " end of turn " + s.turn() + " " + DASH + " ", GREY)
+        return paint("  " + DASH + " end of turn " + s.turn() + " " + DASH + " ", GREY)
                 + "served " + paint(String.valueOf(s.servedCount()), GREEN)
                 + paint(" | ", GREY) + "unhappy departures " + unhappy
                 + paint(" | ", GREY) + "revenue " + paint(formatMoney(s.revenueCents()), GREEN)
                 + paint(" | ", GREY) + "avg sat " + formatAvg(s)
-                + paint(" | ", GREY) + "turns used " + s.turn() + "/" + s.maxTurns());
+                + paint(" | ", GREY) + "turns used " + s.turn() + "/" + s.maxTurns();
     }
 
     // Prints final stats and whether the player won or lost
     private void showResult(GameResult r) {
+        clearScreen();
         GameSnapshot s = controller.snapshot();
         boolean won = r == GameResult.VICTORY;
         String color = won ? GREEN : RED;
@@ -272,7 +308,7 @@ public class GameCLI {
 
     // helpers
     // Colours an event line by what it is about (cosmetic only, the wording comes from the controller)
-    private void printEvent(String e) {
+    private String formatEvent(String e) {
         String l = e.toLowerCase();
         String tag;
         String color;
@@ -287,7 +323,7 @@ public class GameCLI {
         } else {
             tag = "[*]"; color = BLUE;
         }
-        System.out.println("  " + paint(tag, BOLD, color) + " " + e);
+        return "  " + paint(tag, BOLD, color) + " " + e;
     }
 
     // Formats a customer as id, state, satisfaction bar and order (if any)

@@ -33,7 +33,7 @@ public class GameController {
     // config: game settings and win conditions
     public GameController(GameConfig config) {
         this.config = config;
-        this.restaurant = new Restaurant(config.tableCount());
+        this.restaurant = new Restaurant(config.tableCount(), config.seed());
     }
 
     // Step 1: advances the turn and adds any arriving customer to the queue
@@ -97,11 +97,7 @@ public class GameController {
             // true once satisfaction hits 0
             boolean leaves = c.applyWaitingPenalty();
             if (leaves) {
-                // drop any unfinished order
-                if (c.getOrder() != null) c.getOrder().cancel();
-                c.setState(CustomerState.LEFT);
-                restaurant.removeCustomer(c);
-                restaurant.getStats().recordDeparture();
+                restaurant.removeAbandoned(c);
                 events.add("C" + c.getId() + " reached 0 satisfaction and leaves without paying.");
             }
         }

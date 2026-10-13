@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.Random;  
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,14 +20,17 @@ public class Restaurant {
     // Oldest first for the cashier
     private final Deque<Customer> readyToPay = new ArrayDeque<>();
     // All customers by ID, in arrival order
+    
     private final Map<Integer, Customer> customers = new LinkedHashMap<>();
     private final Menu menu = new Menu();
     private final Statistics stats = new Statistics();
+    private final Random rng;     
     private int nextOrderId = 1;
     private int currentTurn;
 
     // tableCount: number of tables, numbered from 1
-    public Restaurant(int tableCount) {
+    public Restaurant(int tableCount, long seed) {
+       this.rng = new Random(seed);
         for (int i = 1; i <= tableCount; i++) tables.add(new Table(i));
     }
 
@@ -49,16 +53,15 @@ public class Restaurant {
     public void seatCustomer(Customer c, Table t) {
         waitingQueue.remove(c);
         t.seat(c);
-        c.setState(CustomerState.SEATED);
+        c.markSeated();
     }
 
     // The customer chooses their own food; the price is locked here
     public Order placeOrder(Customer c) {
-        MenuItem item = c.chooseItem(menu);
+        MenuItem item = c.chooseItem(menu, rng); 
         Order order = new Order(nextOrderId++, c, item, c.priceFor(item.getPriceCents()));
         orders.add(order);
-        c.setOrder(order);
-        c.setState(CustomerState.ORDERED);
+        c.markOrdered(order);
         return order;
     }
 
@@ -75,8 +78,22 @@ public class Restaurant {
         readyToPay.addLast(c);
     }
 
+    public void collectPayment(Customer c) {
+        c.getOrder().markPaid();
+        c.markPaid();
+        stats.recordPayment(c.getOrder().getPriceCents(), c.getSatisfaction());
+        removeCustomer(c);
+    }
+
+    public void removeAbandoned(Customer c) {
+        if (c.getOrder() != null) c.getOrder().cancel();
+        c.markLeft();
+        removeCustomer(c);
+        stats.recordDeparture();
+    }
+
     // Takes a paid or departing customer out of every queue and frees their table
-    public void removeCustomer(Customer c) {
+    private void removeCustomer(Customer c) {
         waitingQueue.remove(c);
         readyToPay.remove(c);
         for (Table t : tables) {
@@ -95,7 +112,8 @@ public class Restaurant {
     public List<Table> getTables() { return Collections.unmodifiableList(tables); }
     public List<Customer> getWaitingQueue() { return Collections.unmodifiableList(waitingQueue); }
     public List<Order> getOrders() { return Collections.unmodifiableList(orders); }
-    public Deque<Customer> getReadyToPay() { return readyToPay; }
     public Menu getMenu() { return menu; }
     public Statistics getStats() { return stats; }
+    public Optional<Customer> peekNextToPay() { return Optional.ofNullable(readyToPay.peekFirst()); }
+
 }

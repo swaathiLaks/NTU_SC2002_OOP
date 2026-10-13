@@ -12,6 +12,6 @@ public record GameConfig(int maxTurns, int tableCount, int minPaid, int minReven
 
     // Returns the required base setting: 18 turns, 2 tables, at least 4 paid, $45.00 revenue, 60 avg satisfaction
     public static GameConfig base() {
-        return new GameConfig(18, 2, 4, 4500, 60, 2002L);
+        return new GameConfig(18, 2, 4, 4500, 60, 3L);
     }
 }

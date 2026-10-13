@@ -1,7 +1,6 @@
 # Stage 1 test notes
 All runs use the base setting: 18 turns, 2 tables, 1 Waiter, 1 Chef, 1 Cashier,
-arrivals on turns 1, 4, 7, 10, 13, 16. Customers order in a fixed cycle by arrival
-number: C1 Pasta, C2 Burger, C3 Salad, C4 Pasta, C5 Burger, C6 Salad.
+arrivals on turns 1, 4, 7, 10, 13, 16. Customers choose food using a seeded java.util.Random (seed 3, see GameConfig): C1 Pasta, C2 Pasta, C3 Salad, C4 Burger, C5 Salad, C6 Salad.
 
 Run each test from the `ver_1` folder after compiling (see README).
 Each input file has one menu number per line (Waiter choice, then Chef choice, for each turn).
@@ -9,13 +8,12 @@ Each input file has one menu number per line (Waiter choice, then Chef choice, f
 ## Run 1: Victory (reproducible)
 java -cp out app.Main < docs/victory-input.txt
 
-Strategy: Waiter serves a READY order first, otherwise takes an order, otherwise seats
-the next customer. Chef always works on the oldest order in the kitchen.
+Strategy: Waiter serves a READY order first, otherwise takes an order, otherwise seats the next customer. Chef always works on the oldest order in the kitchen.
 
 Expected result:
 | Paid | Revenue | Avg satisfaction | Unhappy departures | Result |
 |---|---|---|---|---|
-| 5 | $75.00 | 74.4 | 0 | VICTORY |
+| 5 | $69.00 | 74.4 | 0 | VICTORY |
 
 ## Run 2: Defeat (reproducible)
 java -cp out app.Main < docs/defeat-input.txt
