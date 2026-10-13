@@ -83,6 +83,15 @@ public class GameCLI {
     private static final Map<Character, String[]> FONT_UNICODE = new HashMap<>();
     private static final Map<Character, String[]> FONT_ASCII = new HashMap<>();
     static {
+        FONT_UNICODE.put('R', new String[]{"██████╗ ", "██╔══██╗", "██████╔╝", "██╔══██╗", "██║  ██║", "╚═╝  ╚═╝"});
+        FONT_UNICODE.put('E', new String[]{"███████╗", "██╔════╝", "█████╗  ", "██╔══╝  ", "███████╗", "╚══════╝"});
+        FONT_UNICODE.put('S', new String[]{"███████╗", "██╔════╝", "███████╗", "╚════██║", "███████║", "╚══════╝"});
+        FONT_UNICODE.put('T', new String[]{"████████╗", "╚══██╔══╝", "   ██║   ", "   ██║   ", "   ██║   ", "   ╚═╝   "});
+        FONT_UNICODE.put('A', new String[]{" █████╗ ", "██╔══██╗", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"});
+        FONT_UNICODE.put('U', new String[]{"██╗   ██╗", "██║   ██║", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "});
+        FONT_UNICODE.put('N', new String[]{"███╗   ██╗", "████╗  ██║", "██╔██╗ ██║", "██║╚██╗██║", "██║ ╚████║", "╚═╝  ╚═══╝"});
+        FONT_UNICODE.put('H', new String[]{"██╗  ██╗", "██║  ██║", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"});
+        FONT_UNICODE.put(' ', new String[]{"    ", "    ", "    ", "    ", "    ", "    "});
         FONT_ASCII.put('R', new String[]{" ____  ", "|  _ \\ ", "| |_) |", "|  _ < ", "|_| \\_\\"});
         FONT_ASCII.put('E', new String[]{" _____ ", "| ____|", "|  _|  ", "| |___ ", "|_____|"});
         FONT_ASCII.put('S', new String[]{" ____  ", "/ ___| ", "\\___ \\ ", " ___) |", "|____/ "});
