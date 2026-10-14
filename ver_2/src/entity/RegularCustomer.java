@@ -8,4 +8,9 @@ public class RegularCustomer extends Customer {
     // Losses 8 satisfaction per turn spent waiting
     @Override
     public int waitingLoss() { return 8; }
+
+    // Added in Stage 2: required by the new typeLabel method in Customer
+    // Label shown in the CLI
+    @Override
+    public String typeLabel() { return "Regular"; }
 }

@@ -178,7 +178,8 @@ public class GameCLI {
         System.out.println(paint(checker, WHITE));
         System.out.println();
 
-        System.out.println("Ver. 1");
+        // Changed in Stage 2: version label
+        System.out.println("Ver. 2");
         String[] top = render("RESTAURANT");
         for (int i = 0; i < top.length; i++) {
             int shade = top.length > 1 ? i * (FIRE.length - 1) / (top.length - 1) : 0;
@@ -335,12 +336,14 @@ public class GameCLI {
         return "  " + paint(tag, BOLD, color) + " " + e;
     }
 
-    // Formats a customer as id, state, satisfaction bar and order (if any)
+    // Formats a customer as id, type, state, satisfaction bar and order (if any)
     private String describe(CustomerView c) {
         String state = String.valueOf(c.state());
         int sat = c.satisfaction();
         StringBuilder sb = new StringBuilder();
         sb.append(paint(String.format("%-4s", "C" + c.id()), BOLD, WHITE));
+        // Added in Stage 2: shows the customer type after the id
+        sb.append(paint(String.format("%-8s", c.type()), GREY));
         sb.append(paint(String.format("%-15s", "[" + state + "]"), stateColor(state)));
         sb.append(paint(bar(sat, 100, 10), satColor(sat)));
         sb.append(paint(String.format(" %3d", sat), BOLD, satColor(sat)));

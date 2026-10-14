@@ -25,6 +25,11 @@ public abstract class Customer {
     // Bill for an item with the given base price. Regular customers pay full price
     public int priceFor(int baseCents) { return baseCents; }
 
+    // Added in Stage 2: lets the CLI show Regular, VIP or Critic
+    // Name of the customer type for display, given by each subclass
+    // so no other class needs to check which kind of customer it has
+    public abstract String typeLabel();
+
     public MenuItem chooseItem(Menu menu, Random rng) {
         List<MenuItem> items = menu.getItems();
         return items.get(rng.nextInt(items.size()));

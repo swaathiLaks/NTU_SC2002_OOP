@@ -44,7 +44,9 @@ public class GameController {
         List<String> events = new ArrayList<>();
         arrivals.customerArrivingOn(currentTurn).ifPresent(c -> {
             restaurant.addToQueue(c);
-            events.add("C" + c.getId() + " arrives and joins the queue (satisfaction " + c.getSatisfaction() + ").");
+            // Changed in Stage 2: arrival message includes the customer type
+            events.add("C" + c.getId() + " (" + c.typeLabel() + ") arrives and joins the queue (satisfaction "
+                    + c.getSatisfaction() + ").");
         });
         return events;
     }
@@ -124,10 +126,11 @@ public class GameController {
     // Returns the game settings
     public GameConfig getConfig() { return config; }
 
-    // Converts a customer to a read-only view; order field are null if no order yet
+    // Converts a customer to a read-only view, including the customer type; order field are null if no order yet
     private static CustomerView view(Customer c) {
         Order o = c.getOrder();
-        return new CustomerView(c.getId(), c.getSatisfaction(), c.getState(),
+        // Changed in Stage 2: also passes the customer type to the view
+        return new CustomerView(c.getId(), c.typeLabel(), c.getSatisfaction(), c.getState(),
                 o == null ? null : o.getItem().getName(), o == null ? null : o.getStatus());
     }
 }
