@@ -1,4 +1,5 @@
 ## Stage 1 → Stage 2
+Compare: https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/3710f52...ac7e941a4403390c4a7463ddca02c597cdc8215c 
 
 ### New files
 | File | Purpose |
