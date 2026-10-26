@@ -4,8 +4,6 @@ import java.util.List;
 
 // Base customer
 public abstract class Customer {
-    private static final List<String> ORDER_CYCLE = List.of("Pasta", "Burger", "Salad");
-
     private final int id;
     // Starts full, drops while waiting
     private int satisfaction = 100;
@@ -47,9 +45,9 @@ public abstract class Customer {
     }
 
     // Marks the food as delivered and records the turn, so eating finishes next turn
-    public void markServed(int turn) { state = CustomerState.SERVED; servedTurn = turn; }
+    void markServed(int turn) { state = CustomerState.SERVED; servedTurn = turn; }
     // Marks the customer as finished eating and records the turn, for oldest-first payment
-    public void markReadyToPay(int turn) { state = CustomerState.READY_TO_PAY; readyToPayTurn = turn; }
+    void markReadyToPay(int turn) { state = CustomerState.READY_TO_PAY; readyToPayTurn = turn; }
     void markSeated()        { state = CustomerState.SEATED; }
     void markOrdered(Order o){ order = o; state = CustomerState.ORDERED; }
     void markPaid()          { state = CustomerState.PAID; }
@@ -58,7 +56,6 @@ public abstract class Customer {
     public int getId() { return id; }
     public int getSatisfaction() { return satisfaction; }
     public CustomerState getState() { return state; }
-    public void setOrder(Order o) { order = o; }
     public int getServedTurn() { return servedTurn; }
     public int getReadyToPayTurn() { return readyToPayTurn; }
     public Order getOrder() { return order;}

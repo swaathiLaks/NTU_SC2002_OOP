@@ -27,6 +27,7 @@ public class GameController {
     private final Cashier cashier = new Cashier();
     private final ArrivalSchedule arrivals = new ArrivalSchedule();
     private final ResultEvaluator evaluator = new ResultEvaluator();
+    private boolean waiterActed, chefActed;
     // 0 before the first turn starts
     private int currentTurn;
 
@@ -41,6 +42,8 @@ public class GameController {
     public List<String> startTurn() {
         currentTurn++;
         restaurant.startTurn(currentTurn);
+        waiterActed = false;
+        chefActed = false;
         List<String> events = new ArrayList<>();
         arrivals.customerArrivingOn(currentTurn).ifPresent(c -> {
             restaurant.addToQueue(c);
@@ -57,7 +60,12 @@ public class GameController {
     public List<StaffAction> chefOptions() { return chef.availableActions(restaurant); }
 
     // Executes the chosen waiter action
-    public ActionResult applyWaiterAction(StaffAction a) { return a.execute(restaurant); }
+    public ActionResult applyWaiterAction(StaffAction a) {
+        if (waiterActed) return ActionResult.failure("The Waiter has already acted this turn.");
+        ActionResult r = a.execute(restaurant);
+        if (r.ok()) waiterActed = true;
+        return r;
+    }
     // Executes the chosen chef action
     public ActionResult applyChefAction(StaffAction a) { return a.execute(restaurant); }
 

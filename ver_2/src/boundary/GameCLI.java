@@ -374,7 +374,7 @@ public class GameCLI {
         return RED;
     }
 
-    // TODO: Draws a bar such as ████████░░░░ for value out of max
+    // Draws a bar such as ████████░░░░ for value out of max
     private String bar(int value, int max, int width) {
         int filled = max <= 0 ? 0 : Math.max(0, Math.min(width, Math.round((float) value * width / max)));
         return FULL.repeat(filled) + EMPTY.repeat(width - filled);
