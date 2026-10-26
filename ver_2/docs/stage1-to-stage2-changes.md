@@ -1,7 +1,5 @@
 ## Stage 1 → Stage 2
 
-Compare: 
-
 ### New files
 | File | Purpose |
 |---|---|
