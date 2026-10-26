@@ -37,10 +37,28 @@ javac --release 17 -d out src/app/*.java src/boundary/*.java src/control/*.java 
 
 Adding a new customer type only needs a new subclass and one line in `ArrivalSchedule`.
 
-## Changes from Stage 1
+## Stage comparisons
 
-See [docs/stage1-to-stage2-changes.md](docs/stage1-to-stage2-changes.md). In the code, every change is
-marked with `// New file added in Stage 2`, `// Added in Stage 2` or `// Changed in Stage 2`.
+In the code, every change is marked with `// New file added in Stage N`, `// Added in Stage N` or `// Changed in Stage N`.
+
+Repository: https://github.com/swaathiLaks/NTU_SC2002_OOP 
+
+### Stage 1 -> Stage 2 (compare: [<LINK stage-1...stage-2>](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/3710f52...ac7e941a4403390c4a7463ddca02c597cdc8215c))
+
+| New file | Purpose |
+|---|---|
+| entity/VIPCustomer.java | Loses 5 per waiting turn; overrides `priceFor()` for 10% off |
+| entity/CriticCustomer.java | Loses 12 per waiting turn; overrides `chooseItem()` to order the dish with most prep units |
+
+| Changed file | Why |
+|---|---|
+| entity/Customer.java | Added abstract `typeLabel()` so subclasses name their own type |
+| entity/RegularCustomer.java | Implements `typeLabel()` |
+| control/ArrivalSchedule.java | Set of turns -> map of turn to customer factory, so types differ per arrival |
+| control/GameController.java | Arrival message and view include the type |
+| boundary/CustomerView.java, boundary/GameCLI.java | Display the type |
+
+Unchanged: Restaurant, Order, Table, Statistics, ResultEvaluator, all staff classes. Stage 1 already exposed `waitingLoss()`, `priceFor()` and `chooseItem()`, so Stage 2 only added subclasses.
 
 ## Tests
 
