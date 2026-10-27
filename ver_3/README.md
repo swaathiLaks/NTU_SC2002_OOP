@@ -84,7 +84,7 @@ In the code, every change is marked with `// New file added in Stage 3`, `// Add
 
 Repository: https://github.com/swaathiLaks/NTU_SC2002_OOP
 
-### Stage 2 -> Stage 3 (compare: )
+### Stage 2 -> Stage 3 (compare: https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/7bde336a99b71d1862ca93ffdef19a85df8f5cd2...8c10fec2342e5ba5218f5e62c62e2e333d5d55a2)
 
 | New file | Purpose |
 |---|---|
