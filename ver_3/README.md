@@ -84,6 +84,30 @@ In the code, every change is marked with `// New file added in Stage 3`, `// Add
 
 Repository: https://github.com/swaathiLaks/NTU_SC2002_OOP
 
+### Stage 1 -> Stage 2 (compare: https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/3710f5247f01d43ae8c45f09ac3e0e12a57d713d...27ebbd7b5dd381a39c849849a17c79b3dd801eeb)
+
+| New file | Purpose |
+|---|---|
+| entity/VIPCustomer.java | Loses 5 per waiting turn; overrides `priceFor()` for 10% off |
+| entity/CriticCustomer.java | Loses 12 per waiting turn; overrides `chooseItem()` to order the dish with most prep units |
+|entity/Pricing.java|Neew file with rounding rule and money formatter|
+|src/test directory|Stage 1 runs, superseded by docs/test-notes.md|
+
+| Changed file | Why |
+|---|---|
+| entity/Customer.java | Added abstract `typeLabel()` so subclasses name their own type |
+| entity/RegularCustomer.java | Implements `typeLabel()`. Corrected inaccurate comments. |
+|entity/Restaurant.java|Added `prepare()` and `applyWaitingPenalties()`. Chef and penalty logic go through the aggregate instead of the controller|
+|entity/Order.java, Table.java, Customer.java|Mutating methods package-private; removed `setOrder()` and unused `ORDER_CYCLE`|
+| control/ArrivalSchedule.java | Set of turns -> map of turn to customer factory, so types differ per arrival |
+| control/GameController.java | Arrival message and view include the type |
+| boundary/CustomerView.java, boundary/GameCLI.java | Display the type |
+|boundary/GameCLI.java, GameExitException.java|Cleanup: `Pricing.format`, stale TODO removed, `serialVersionUID`|
+|staff/PrepareAction.java, TakeOrderAction.java|Use `Restaurant.prepare()` / `Pricing.format` to adhere to encapsulation and enforce consistent money format.|
+|README.md, docs/test-notes.md, docs/*-input.txt|Modified for Stage 2|
+
+Unchanged: Statistics, ResultEvaluator, all staff classes except PrepareAction and TakeOrderAction. Stage 1 already exposed `waitingLoss()`, `priceFor()` and `chooseItem()`, so Stage 2 only added subclasses.
+
 ### Stage 2 -> Stage 3 (compare: https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/7bde336a99b71d1862ca93ffdef19a85df8f5cd2...8c10fec2342e5ba5218f5e62c62e2e333d5d55a2)
 
 | New file | Purpose |
@@ -109,6 +133,7 @@ Repository: https://github.com/swaathiLaks/NTU_SC2002_OOP
 | control/GameConfig.java | Seed 3 -> 4. With seed 3 no combo is drawn in the base run, so combos would never appear. Seed 4 includes combos (see test notes) |
 | boundary/GameSnapshot.java | Added the `HappyHourView` field |
 | boundary/GameCLI.java | Host step, Happy Hour prompt, rainbow banner and splash, `P`/`Y`/`O` letters for the block font, version label. `runStaffStep` now takes the controller calls instead of a waiter/chef flag |
+|README.md, docs/test-notes.md, docs/*-input.txt|Modified for Stage 3|
 
 Unchanged: `Chef`, `Cashier`, `PrepareAction`, `ServeAction`, `StaffAction`, `WaitAction`, `MenuItem`, `Pricing`, `Statistics`,
 `Table`, `RegularCustomer`, `VIPCustomer`, `ArrivalSchedule`, `ResultEvaluator`, `Main` and the other boundary classes.
