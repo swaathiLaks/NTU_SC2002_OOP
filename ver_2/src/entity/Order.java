@@ -15,7 +15,7 @@ public class Order {
     // customer: customer who placed the order
     // item: dish ordered
     // priceCents: price the customer will pay
-    public Order(int id, Customer customer, MenuItem item, int priceCents) {
+    Order(int id, Customer customer, MenuItem item, int priceCents) {
         this.id = id;
         this.customer = customer;
         this.item = item;
@@ -24,7 +24,7 @@ public class Order {
     }
 
     // Does one preparation unit. Returns true if the order just became READY
-    public boolean advance() {
+    boolean advance() {
         if (!isInKitchen()) throw new IllegalStateException("Order " + id + " is not being prepared");
         remainingUnits--;
         status = remainingUnits == 0 ? OrderStatus.READY : OrderStatus.COOKING;
@@ -32,16 +32,16 @@ public class Order {
     }
 
     // Marks a READY order as delivered to the customer
-    public void markServed() {
+    void markServed() {
         if (status != OrderStatus.READY) throw new IllegalStateException("Order " + id + " is not READY");
         status = OrderStatus.SERVED;
     }
 
     // Marks the order as paid by the cashier
-    public void markPaid() { status = OrderStatus.PAID; }
+    void markPaid() { status = OrderStatus.PAID; }
 
     // Cancels an unfinished order. Served or paid orders are left alone
-    public void cancel() {
+    void cancel() {
         if (status != OrderStatus.SERVED && status != OrderStatus.PAID) status = OrderStatus.CANCELLED;
     }
 

@@ -15,7 +15,7 @@ public class VIPCustomer extends Customer {
     // baseCents: menu price in cents
     // return: discounted price in cents
     @Override
-    public int priceFor(int baseCents) { return (baseCents * 9 + 5) / 10; }
+    public int priceFor(int baseCents) { return Pricing.percentOf(baseCents, 90); }
 
     // Label shown in the CLI
     @Override

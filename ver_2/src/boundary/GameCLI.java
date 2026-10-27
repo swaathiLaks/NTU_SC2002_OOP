@@ -4,6 +4,7 @@ import control.ActionResult;
 import control.GameConfig;
 import control.GameController;
 import entity.GameResult;
+import entity.Pricing;
 import staff.StaffAction;
 
 import java.io.FileDescriptor;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 import java.io.Console;
@@ -382,19 +384,18 @@ public class GameCLI {
 
     // Returns average satisfaction to 1dp or "N/A" if no one has paid yet
     private String formatAvg(GameSnapshot s) {
-        return s.avgSatisfaction().isPresent() ? String.format("%.1f", s.avgSatisfaction().getAsDouble()) : "N/A";
+        return s.avgSatisfaction().isPresent() ? String.format(Locale.ROOT, "%.1f", s.avgSatisfaction().getAsDouble()) : "N/A";
     }
 
     // Same as formatAvg but green when the goal is met, yellow when not, grey for N/A
     private String formatAvgColored(GameSnapshot s, GameConfig cfg) {
         if (s.avgSatisfaction().isEmpty()) return paint("N/A", GREY);
         double avg = s.avgSatisfaction().getAsDouble();
-        return paint(String.format("%.1f", avg), BOLD, avg >= cfg.minAvgSatisfaction() ? GREEN : YELLOW)
+        return paint(String.format(Locale.ROOT, "%.1f", avg), BOLD, avg >= cfg.minAvgSatisfaction() ? GREEN : YELLOW)
                 + paint(" / " + cfg.minAvgSatisfaction() + " goal", GREY);
     }
 
     // Converts cents to a "$x.yy" string
-    private String formatMoney(int cents) {
-        return String.format("$%d.%02d", cents / 100, cents % 100);
-    }
+    // Changed in Stage 2: shared with the controller through Pricing.format
+    private String formatMoney(int cents) { return Pricing.format(cents); }
 }

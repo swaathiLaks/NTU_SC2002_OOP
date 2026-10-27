@@ -65,6 +65,10 @@ public class Restaurant {
         return order;
     }
 
+    // Added in Stage 2: the chef does one preparation unit. Returns true if the order just became READY
+    // Goes through Restaurant so Order.advance() can stay package-private
+    public boolean prepare(Order order) { return order.advance(); }
+
     // Delivers a READY order to its customer and counts them as served
     public void serve(Order order) {
         order.markServed();
@@ -85,7 +89,21 @@ public class Restaurant {
         removeCustomer(c);
     }
 
-    public void removeAbandoned(Customer c) {
+    // Step 5: every waiting or seated customer who has not been served loses satisfaction
+    // Changed in Stage 2: moved here from GameController so Customer.applyWaitingPenalty() can be package-private
+    // return: the customers who reached 0 and left without paying
+    public List<Customer> applyWaitingPenalties() {
+        List<Customer> departed = new ArrayList<>();
+        for (Customer c : getActiveCustomers()) {
+            if (c.isWaitingForService() && c.applyWaitingPenalty()) {
+                removeAbandoned(c);
+                departed.add(c);
+            }
+        }
+        return departed;
+    }
+
+    private void removeAbandoned(Customer c) {
         if (c.getOrder() != null) c.getOrder().cancel();
         c.markLeft();
         removeCustomer(c);

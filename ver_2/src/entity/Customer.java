@@ -34,7 +34,7 @@ public abstract class Customer {
     }
 
     // Applies one turn of waiting. Returns true if satisfaction has reached 0
-    public boolean applyWaitingPenalty() {
+    boolean applyWaitingPenalty() {
         satisfaction = Math.max(0, satisfaction - waitingLoss());
         return satisfaction == 0;
     }
@@ -52,7 +52,7 @@ public abstract class Customer {
     void markOrdered(Order o){ order = o; state = CustomerState.ORDERED; }
     void markPaid()          { state = CustomerState.PAID; }
     void markLeft()          { state = CustomerState.LEFT; }
-    // Getters and setters
+    // Getters
     public int getId() { return id; }
     public int getSatisfaction() { return satisfaction; }
     public CustomerState getState() { return state; }

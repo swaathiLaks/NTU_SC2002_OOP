@@ -43,22 +43,29 @@ In the code, every change is marked with `// New file added in Stage N`, `// Add
 
 Repository: https://github.com/swaathiLaks/NTU_SC2002_OOP 
 
-### Stage 1 -> Stage 2 (compare: [<LINK stage-1...stage-2>](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/3710f52...ac7e941a4403390c4a7463ddca02c597cdc8215c))
+### Stage 1 -> Stage 2 (compare: https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/3710f52...ac7e941a4403390c4a7463ddca02c597cdc8215c)
 
 | New file | Purpose |
 |---|---|
 | entity/VIPCustomer.java | Loses 5 per waiting turn; overrides `priceFor()` for 10% off |
 | entity/CriticCustomer.java | Loses 12 per waiting turn; overrides `chooseItem()` to order the dish with most prep units |
+|entity/Pricing.java|Neew file with rounding rule and money formatter|
+|src/test directory|Stage 1 runs, superseded by docs/test-notes.md|
 
 | Changed file | Why |
 |---|---|
 | entity/Customer.java | Added abstract `typeLabel()` so subclasses name their own type |
-| entity/RegularCustomer.java | Implements `typeLabel()` |
+| entity/RegularCustomer.java | Implements `typeLabel()`. Corrected inaccurate comments. |
+|entity/Restaurant.java|Added `prepare()` and `applyWaitingPenalties()`. Chef and penalty logic go through the aggregate instead of the controller|
+|entity/Order.java, Table.java, Customer.java|Mutating methods package-private; removed `setOrder()` and unused `ORDER_CYCLE`|
 | control/ArrivalSchedule.java | Set of turns -> map of turn to customer factory, so types differ per arrival |
 | control/GameController.java | Arrival message and view include the type |
 | boundary/CustomerView.java, boundary/GameCLI.java | Display the type |
+|boundary/GameCLI.java, GameExitException.java|Cleanup: `Pricing.format`, stale TODO removed, `serialVersionUID`|
+|staff/PrepareAction.java, TakeOrderAction.java|Use `Restaurant.prepare()` / `Pricing.format` to adhere to encapsulation and enforce consistent money format.|
 
-Unchanged: Restaurant, Order, Table, Statistics, ResultEvaluator, all staff classes. Stage 1 already exposed `waitingLoss()`, `priceFor()` and `chooseItem()`, so Stage 2 only added subclasses.
+
+Unchanged: Statistics, ResultEvaluator, all staff classes except PrepareAction and TakeOrderAction. Stage 1 already exposed `waitingLoss()`, `priceFor()` and `chooseItem()`, so Stage 2 only added subclasses.
 
 ## Tests
 

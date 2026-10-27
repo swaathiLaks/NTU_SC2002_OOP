@@ -24,7 +24,7 @@ public class PrepareAction implements StaffAction {
     public ActionResult execute(Restaurant r) {
         if (!order.isInKitchen())
             return ActionResult.failure("Order #" + order.getId() + " is not in the kitchen (" + order.getStatus() + ").");
-        boolean ready = order.advance();
+        boolean ready = r.prepare(order);
         return ActionResult.success(ready
                 ? "Chef finishes order #" + order.getId() + ": READY."
                 : "Chef prepares order #" + order.getId() + ": " + order.getRemainingUnits() + " unit(s) left.");

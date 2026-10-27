@@ -4,6 +4,7 @@ import control.ActionResult;
 import entity.Customer;
 import entity.CustomerState;
 import entity.Order;
+import entity.Pricing;
 import entity.Restaurant;
 import entity.Table;
 
@@ -31,8 +32,8 @@ public class TakeOrderAction implements StaffAction {
         if (c.getState() != CustomerState.SEATED)
             return ActionResult.failure("C" + c.getId() + " has already ordered.");
         Order o = r.placeOrder(c);
-        return ActionResult.success(String.format("Waiter takes C%d's order: %s ($%.2f, %d unit%s) as order #%d.",
-                c.getId(), o.getItem().getName(), o.getPriceCents() / 100.0,
+        return ActionResult.success(String.format("Waiter takes C%d's order: %s (%s, %d unit%s) as order #%d.",
+                c.getId(), o.getItem().getName(), Pricing.format(o.getPriceCents()),
                 o.getRemainingUnits(), o.getRemainingUnits() == 1 ? "" : "s", o.getId()));
     }
 }

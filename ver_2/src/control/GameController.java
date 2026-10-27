@@ -7,6 +7,7 @@ import entity.Customer;
 import entity.CustomerState;
 import entity.GameResult;
 import entity.Order;
+import entity.Pricing;
 import entity.Restaurant;
 import entity.Statistics;
 import staff.Cashier;
@@ -67,8 +68,12 @@ public class GameController {
         return r;
     }
     // Executes the chosen chef action
-    public ActionResult applyChefAction(StaffAction a) { return a.execute(restaurant); }
-
+    public ActionResult applyChefAction(StaffAction a) {
+        if (chefActed) return ActionResult.failure("The Chef has already acted this turn.");
+        ActionResult r = a.execute(restaurant);
+        if (r.ok()) chefActed = true;
+        return r;
+    }
     // Steps 4-5: eating, payment, waiting penalties and abandonment
     // return: end-of-turn messages for display
     public List<String> endTurn() {
@@ -94,23 +99,17 @@ public class GameController {
     // The Cashier handles at most one customer per turn, oldest first
     private List<String> processPayment() {
         return cashier.collectPayment(restaurant, currentTurn)
-                .map(c -> List.of(String.format("Cashier collects $%.2f from C%d: PAID, table freed. Satisfaction %d recorded.",
-                        c.getOrder().getPriceCents() / 100.0, c.getId(), c.getSatisfaction())))
+                .map(c -> List.of(String.format("Cashier collects %s from C%d: PAID, table freed. Satisfaction %d recorded.",
+                        Pricing.format(c.getOrder().getPriceCents()), c.getId(), c.getSatisfaction())))
                 .orElse(List.of());
     }
 
     // Everyone still waiting for a table or food loses satisfaction; at 0 they leave without paying
+    // Changed in Stage 2: Restaurant applies the penalties, the controller only reports who left
     private List<String> applyWaitingPenalties() {
         List<String> events = new ArrayList<>();
-        for (Customer c : restaurant.getActiveCustomers()) {
-            if (!c.isWaitingForService()) continue;
-            // true once satisfaction hits 0
-            boolean leaves = c.applyWaitingPenalty();
-            if (leaves) {
-                restaurant.removeAbandoned(c);
-                events.add("C" + c.getId() + " reached 0 satisfaction and leaves without paying.");
-            }
-        }
+        for (Customer c : restaurant.applyWaitingPenalties())
+            events.add("C" + c.getId() + " reached 0 satisfaction and leaves without paying.");
         return events;
     }
 

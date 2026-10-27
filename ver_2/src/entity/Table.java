@@ -9,7 +9,7 @@ public class Table {
     private Customer occupant;
 
     // id: table number
-    public Table(int id) { this.id = id; }
+    Table(int id) { this.id = id; }
 
     public int getId() { return id; }
     
@@ -21,11 +21,11 @@ public class Table {
 
     // Seats a customer at this table
     // throws IllegalStateException: if the table is already occupied
-    public void seat(Customer c) {
+    void seat(Customer c) {
         if (!isFree()) throw new IllegalStateException("Table " + id + " is occupied");
         occupant = c;
     }
 
     // Clears the table after the customer pays or leaves
-    public void free() { occupant = null; }
+    void free() { occupant = null; }
 }
