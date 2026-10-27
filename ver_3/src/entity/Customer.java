@@ -28,8 +28,10 @@ public abstract class Customer {
     // so no other class needs to check which kind of customer it has
     public abstract String typeLabel();
 
+    // Changed in Stage 3: picks (seeded random) from everything orderable, so combos can be chosen too
+    // Regular and VIP customers use this rule; the Critic overrides it
     public MenuItem chooseItem(Menu menu, Random rng) {
-        List<MenuItem> items = menu.getItems();
+        List<MenuItem> items = menu.getOrderableItems();
         return items.get(rng.nextInt(items.size()));
     }
 
@@ -37,6 +39,15 @@ public abstract class Customer {
     boolean applyWaitingPenalty() {
         satisfaction = Math.max(0, satisfaction - waitingLoss());
         return satisfaction == 0;
+    }
+
+    // Added in Stage 3: Happy Hour gives back satisfaction, never going above 100
+    // points: satisfaction to give back
+    // return: how many points were actually gained
+    int recoverSatisfaction(int points) {
+        int before = satisfaction;
+        satisfaction = Math.min(100, satisfaction + points);
+        return satisfaction - before;
     }
 
     // True while waiting for a table or for food: these customers lose satisfaction

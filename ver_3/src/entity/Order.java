@@ -7,6 +7,8 @@ public class Order {
     private final MenuItem item;
     // Locked when the order is taken
     private final int priceCents;   
+    // Added in Stage 3: true if Happy Hour was on when the order was taken
+    private final boolean happyHourPrice;
     // Prep units left before READY
     private int remainingUnits;
     private OrderStatus status = OrderStatus.PLACED;
@@ -15,11 +17,13 @@ public class Order {
     // customer: customer who placed the order
     // item: dish ordered
     // priceCents: price the customer will pay
-    Order(int id, Customer customer, MenuItem item, int priceCents) {
+    // happyHourPrice: true if the price includes the Happy Hour discount (Added in Stage 3)
+    Order(int id, Customer customer, MenuItem item, int priceCents, boolean happyHourPrice) {
         this.id = id;
         this.customer = customer;
         this.item = item;
         this.priceCents = priceCents;
+        this.happyHourPrice = happyHourPrice;
         this.remainingUnits = item.getPrepUnits();
     }
 
@@ -54,5 +58,6 @@ public class Order {
     public MenuItem getItem() { return item; }
     public OrderStatus getStatus() { return status; }
     public int getPriceCents() { return priceCents; }
+    public boolean isHappyHourPrice() { return happyHourPrice; }
     public int getRemainingUnits() { return remainingUnits; }
 }

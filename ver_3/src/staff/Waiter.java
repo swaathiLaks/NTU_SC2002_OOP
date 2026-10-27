@@ -1,6 +1,5 @@
 package staff;
 
-import entity.Customer;
 import entity.CustomerState;
 import entity.Order;
 import entity.OrderStatus;
@@ -20,9 +19,8 @@ public class Waiter {
         List<StaffAction> actions = new ArrayList<>();
         
         // Seat: any waiting customer at the first free table
-        r.findFreeTable().ifPresent(t -> {
-            for (Customer c : r.getWaitingQueue()) actions.add(new SeatAction(c, t));
-        });
+        // Changed in Stage 3: built by SeatAction.optionsFor, which the Host shares
+        actions.addAll(SeatAction.optionsFor("Waiter", r));
         
         // Take order: tables with a seated customer who hasn't ordered
         for (Table t : r.getTables()) {

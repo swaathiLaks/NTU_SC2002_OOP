@@ -3,6 +3,7 @@ package staff;
 import control.ActionResult;
 import entity.Customer;
 import entity.CustomerState;
+import entity.HappyHour;
 import entity.Order;
 import entity.Pricing;
 import entity.Restaurant;
@@ -32,8 +33,10 @@ public class TakeOrderAction implements StaffAction {
         if (c.getState() != CustomerState.SEATED)
             return ActionResult.failure("C" + c.getId() + " has already ordered.");
         Order o = r.placeOrder(c);
-        return ActionResult.success(String.format("Waiter takes C%d's order: %s (%s, %d unit%s) as order #%d.",
-                c.getId(), o.getItem().getName(), Pricing.format(o.getPriceCents()),
+        // Changed in Stage 3: the message says when the price includes the Happy Hour discount
+        String discountNote = o.isHappyHourPrice() ? ", Happy Hour -" + HappyHour.DISCOUNT_PERCENT + "%" : "";
+        return ActionResult.success(String.format("Waiter takes C%d's order: %s (%s%s, %d unit%s) as order #%d.",
+                c.getId(), o.getItem().getName(), Pricing.format(o.getPriceCents()), discountNote,
                 o.getRemainingUnits(), o.getRemainingUnits() == 1 ? "" : "s", o.getId()));
     }
 }

@@ -14,6 +14,8 @@ public class CriticCustomer extends Customer {
     public int waitingLoss() { return 12; }
 
     // Always orders the dish with the most preparation units, ties go to the higher price
+    // Changed in Stage 3 (comment only): the critic still looks at the single dishes (menu.getItems()),
+    // never at combos, so the critic's order is the same as in Stage 2
     // On the base menu this is always Pasta, so the manager must prioritise the critic
     // The seeded random is not used, so the critic's choice never changes
     // menu: the restaurant menu

@@ -20,6 +20,9 @@ import java.util.Scanner;
 import java.io.Console;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.regex.Matcher;
 
 // Command-line boundary: shows state and collects the manager's choices. No game rules live here.
 public class GameCLI {
@@ -39,6 +42,9 @@ public class GameCLI {
     private static final String VBAR = UNICODE ? "│" : "|";
     private static final String SPEED = UNICODE ? "▬" : "=";
     private static final String DASH = UNICODE ? "──" : "--";
+    // Added in Stage 3: symbols for the Happy Hour banner
+    private static final String STAR = UNICODE ? "★" : "*";
+    private static final String SEP = UNICODE ? "·" : "|";
 
     // The console's output encoding decides this: a legacy Windows code page (e.g. cp437) cannot show block characters
     private static boolean detectUnicode() {
@@ -81,6 +87,26 @@ public class GameCLI {
         return String.join("", codes) + text + RESET;
     }
 
+    // Added in Stage 3: rainbow colours for the Happy Hour banner (256-colour codes)
+    private static final String[] RAINBOW = {
+            "\u001B[38;5;196m", "\u001B[38;5;208m", "\u001B[38;5;226m", "\u001B[38;5;46m",
+            "\u001B[38;5;51m", "\u001B[38;5;39m", "\u001B[38;5;201m"};
+
+    // Added in Stage 3: colours text through the rainbow, one colour per `group` characters
+    // shift: where in the rainbow to start, so neighbouring rows can be offset
+    // style: optional extra codes such as BOLD
+    private static String rainbow(String text, int shift, int group, String... style) {
+        if (!COLOR) return text;
+        String prefix = String.join("", style);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if (ch == ' ') { sb.append(ch); continue; }
+            sb.append(prefix).append(RAINBOW[Math.floorMod(i / group + shift, RAINBOW.length)]).append(ch);
+        }
+        return sb.append(RESET).toString();
+    }
+
     // block font for the banner
     private static final Map<Character, String[]> FONT_UNICODE = new HashMap<>();
     private static final Map<Character, String[]> FONT_ASCII = new HashMap<>();
@@ -93,6 +119,10 @@ public class GameCLI {
         FONT_UNICODE.put('U', new String[]{"██╗   ██╗", "██║   ██║", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "});
         FONT_UNICODE.put('N', new String[]{"███╗   ██╗", "████╗  ██║", "██╔██╗ ██║", "██║╚██╗██║", "██║ ╚████║", "╚═╝  ╚═══╝"});
         FONT_UNICODE.put('H', new String[]{"██╗  ██╗", "██║  ██║", "███████║", "██╔══██║", "██║  ██║", "╚═╝  ╚═╝"});
+        // Added in Stage 3: letters needed for "HAPPY HOUR"
+        FONT_UNICODE.put('P', new String[]{"██████╗ ", "██╔══██╗", "██████╔╝", "██╔═══╝ ", "██║     ", "╚═╝     "});
+        FONT_UNICODE.put('Y', new String[]{"██╗   ██╗", "╚██╗ ██╔╝", " ╚████╔╝ ", "  ╚██╔╝  ", "   ██║   ", "   ╚═╝   "});
+        FONT_UNICODE.put('O', new String[]{" ██████╗ ", "██╔═══██╗", "██║   ██║", "██║   ██║", "╚██████╔╝", " ╚═════╝ "});
         FONT_UNICODE.put(' ', new String[]{"    ", "    ", "    ", "    ", "    ", "    "});
         FONT_ASCII.put('R', new String[]{" ____  ", "|  _ \\ ", "| |_) |", "|  _ < ", "|_| \\_\\"});
         FONT_ASCII.put('E', new String[]{" _____ ", "| ____|", "|  _|  ", "| |___ ", "|_____|"});
@@ -102,6 +132,9 @@ public class GameCLI {
         FONT_ASCII.put('U', new String[]{" _   _ ", "| | | |", "| | | |", "| |_| |", " \\___/ "});
         FONT_ASCII.put('N', new String[]{" _   _ ", "| \\ | |", "|  \\| |", "| |\\  |", "|_| \\_|"});
         FONT_ASCII.put('H', new String[]{" _   _ ", "| | | |", "| |_| |", "|  _  |", "|_| |_|"});
+        FONT_ASCII.put('P', new String[]{" ____  ", "|  _ \\ ", "| |_) |", "|  __/ ", "|_|    "});
+        FONT_ASCII.put('Y', new String[]{"__   __", "\\ \\ / /", " \\ V / ", "  | |  ", "  |_|  "});
+        FONT_ASCII.put('O', new String[]{"  ___  ", " / _ \\ ", "| | | |", "| |_| |", " \\___/ "});
         FONT_ASCII.put(' ', new String[]{"    ", "    ", "    ", "    ", "    "});
     }
     private static final Map<Character, String[]> FONT = UNICODE ? FONT_UNICODE : FONT_ASCII;
@@ -123,6 +156,8 @@ public class GameCLI {
     private final InputValidator validator = new InputValidator();
     private final Scanner in;
     private final Deque<String> log = new ArrayDeque<>();
+    // Added in Stage 3: scrolling mode prints the turn state once per turn, at the first prompt
+    private boolean stateShown;
 
     // controller: game controller to drive
     // in: source of player input
@@ -152,9 +187,13 @@ public class GameCLI {
             if (!in.hasNextLine() || in.nextLine().trim().equalsIgnoreCase("q")) throw new GameExitException("Player quit");
         }
         while (!controller.isGameOver()) {
+            stateShown = false;
             controller.startTurn().forEach(e -> emit(formatEvent(e)));
-            runStaffStep("Waiter", CYAN, true);
-            runStaffStep("Chef", YELLOW, false);
+            // Changed in Stage 3: Happy Hour decision first, then the Host acts before the Waiter and Chef
+            offerHappyHour();
+            runStaffStep("Host", MAGENTA, controller::hostOptions, controller::applyHostAction);
+            runStaffStep("Waiter", CYAN, controller::waiterOptions, controller::applyWaiterAction);
+            runStaffStep("Chef", YELLOW, controller::chefOptions, controller::applyChefAction);
             controller.endTurn().forEach(e -> emit(formatEvent(e)));
             emit(endOfTurnLine(controller.snapshot()));
         }
@@ -180,8 +219,8 @@ public class GameCLI {
         System.out.println(paint(checker, WHITE));
         System.out.println();
 
-        // Changed in Stage 2: version label
-        System.out.println("Ver. 2");
+        // Changed in Stage 3: version label
+        System.out.println("Ver. 3");
         String[] top = render("RESTAURANT");
         for (int i = 0; i < top.length; i++) {
             int shade = top.length > 1 ? i * (FIRE.length - 1) / (top.length - 1) : 0;
@@ -214,24 +253,103 @@ public class GameCLI {
                 + paint(formatMoney(cfg.minRevenueCents()) + "+ revenue", GREEN) + " | "
                 + paint(cfg.minAvgSatisfaction() + "+ avg satisfaction", GREEN));
         System.out.println(paint("+ -- --=[ ", GREY) + paint("Tip: a dish that is READY can only be served next turn", DIM));
+        // Added in Stage 3
+        System.out.println(paint("+ -- --=[ ", GREY) + "New: a Host to seat guests, combo meals, and one " + rainbow("Happy Hour", 0, 1, BOLD) + " per game");
         System.out.println();
     }
 
     // Re-prompts until the chosen action succeeds, so a failed choice never uses up the task
     // role: display name of the staff member
     // roleColor: colour used for the role label
-    // isWaiter: true for waiter, false for chef
-    private void runStaffStep(String role, String roleColor, boolean isWaiter) {
+    // optionsSource: asks the controller for this staff member's options
+    // apply: asks the controller to carry out the chosen action
+    // Changed in Stage 3: takes the controller calls instead of a waiter/chef flag, so the Host fits in too
+    private void runStaffStep(String role, String roleColor, Supplier<List<StaffAction>> optionsSource,
+                              Function<StaffAction, ActionResult> apply) {
        while (true) {
-            if (INTERACTIVE || isWaiter) showTurnState(controller.snapshot(), controller.getConfig());
-            List<StaffAction> options = isWaiter ? controller.waiterOptions() : controller.chefOptions();
+            showStateIfNeeded();
+            List<StaffAction> options = optionsSource.get();
             StaffAction action = promptAction(role, roleColor, options);
-            ActionResult result = isWaiter ? controller.applyWaiterAction(action) : controller.applyChefAction(action);
+            ActionResult result = apply.apply(action);
             if (result.ok()) {
                 emit(paint("  [+] ", BOLD, GREEN) + result.message());
                 return;
             }
             emit(paint("  [-] ", BOLD, RED) + paint(result.message(), RED));
+        }
+    }
+
+    // Added in Stage 3: in scrolling mode the state is printed once per turn; on a terminal it is redrawn at every prompt
+    private void showStateIfNeeded() {
+        if (INTERACTIVE || !stateShown) {
+            showTurnState(controller.snapshot(), controller.getConfig());
+            stateShown = true;
+        }
+    }
+
+    // Added in Stage 3: while Happy Hour is still unused, asks the manager at the start of the turn whether to start it
+    private void offerHappyHour() {
+        if (!controller.canActivateHappyHour()) return;
+        showStateIfNeeded();
+        HappyHourView hh = controller.snapshot().happyHour();
+        System.out.println();
+        System.out.println(rainbow("[Manager]", 0, 1, BOLD) + " Happy Hour is available (once per game):");
+        System.out.println("    " + paint("[1]", BOLD, CYAN) + " " + paint("Not now", GREY));
+        System.out.println("    " + paint("[2]", BOLD, CYAN) + " Start Happy Hour: " + hh.discountPercent()
+                + "% off new orders and +" + hh.recoveryPoints() + " satisfaction for waiting customers each turn, for "
+                + hh.durationTurns() + " turns starting now");
+        if (validator.readChoice(in, 1, 2) == 1) return;
+        ActionResult result = controller.activateHappyHour();
+        if (!result.ok()) {
+            emit(paint("  [-] ", BOLD, RED) + paint(result.message(), RED));
+            return;
+        }
+        emit(formatEvent(result.message()));
+        printHappyHourSplash(controller.snapshot().happyHour());
+    }
+
+    // Added in Stage 3: full-width rainbow banner shown when Happy Hour starts
+    private void printHappyHourSplash(HappyHourView hh) {
+        clearScreen();
+        System.out.println();
+        System.out.println(rainbow(HEAVY.repeat(WIDTH), 0, 2));
+        System.out.println();
+        String[] rows = render("HAPPY HOUR");
+        for (int i = 0; i < rows.length; i++) {
+            String indent = " ".repeat(Math.max(0, (WIDTH - rows[i].length()) / 2));
+            System.out.println(indent + rainbow(rows[i], i, 4, BOLD));
+        }
+        System.out.println();
+        String offer = hh.discountPercent() + "% OFF every new order  " + SEP + "  +" + hh.recoveryPoints()
+                + " satisfaction for waiting customers";
+        System.out.println(" ".repeat(Math.max(0, (WIDTH - offer.length()) / 2)) + rainbow(offer, 3, 1, BOLD));
+        String lasts = STAR + " lasts " + hh.durationTurns() + " turns: this turn and the next " + STAR;
+        System.out.println(" ".repeat(Math.max(0, (WIDTH - lasts.length()) / 2)) + paint(lasts, BOLD, YELLOW));
+        System.out.println();
+        System.out.println(rainbow(HEAVY.repeat(WIDTH), 3, 2));
+        System.out.println();
+        if (INTERACTIVE) { // the next screen redraw would wipe the banner, so wait for the player
+            System.out.print("Press Enter to continue (q to quit) > ");
+            if (!in.hasNextLine() || in.nextLine().trim().equalsIgnoreCase("q")) throw new GameExitException("Player quit");
+        }
+    }
+
+    // Added in Stage 3: Happy Hour line in the turn header. A rainbow banner with the remaining duration while it is on
+    private void printHappyHourStatus(HappyHourView hh) {
+        if (hh.active()) {
+            int n = hh.turnsRemaining();
+            String remaining = n + (n == 1 ? " turn" : " turns") + " remaining" + (n == 1 ? " (last one!)" : "");
+            String title = STAR + " " + STAR + "  HAPPY HOUR  " + STAR + " " + STAR;
+            String offer = hh.discountPercent() + "% off new orders " + SEP + " +" + hh.recoveryPoints()
+                    + " satisfaction for waiting customers";
+            System.out.println(rainbow(HEAVY.repeat(WIDTH), 0, 2));
+            System.out.println(" " + rainbow(title, 0, 1, BOLD) + "   " + paint(remaining, BOLD, YELLOW));
+            System.out.println(" " + rainbow(offer, 2, 1));
+            System.out.println(rainbow(HEAVY.repeat(WIDTH), 3, 2));
+        } else if (hh.available()) {
+            System.out.println(" Happy Hour: " + paint("available (once per game)", GREY));
+        } else {
+            System.out.println(" Happy Hour: " + paint("already used", GREY));
         }
     }
 
@@ -262,6 +380,9 @@ public class GameCLI {
         System.out.println(" Revenue: " + paint(formatMoney(s.revenueCents()), BOLD, revOk ? GREEN : WHITE)
                 + paint(" / " + formatMoney(cfg.minRevenueCents()) + " goal", GREY)
                 + "     Avg satisfaction (paid): " + formatAvgColored(s, cfg));
+
+        // Added in Stage 3
+        printHappyHourStatus(s.happyHour());
 
         System.out.println();
         System.out.println(paint(" WAITING QUEUE", BOLD, YELLOW));
@@ -324,6 +445,10 @@ public class GameCLI {
         String l = e.toLowerCase();
         String tag;
         String color;
+        // Added in Stage 3: Happy Hour events get a rainbow tag and a rainbow name
+        if (l.contains("happy hour"))
+            return "  " + rainbow("[*]", 0, 1, BOLD) + " "
+                    + e.replaceFirst("Happy Hour", Matcher.quoteReplacement(rainbow("Happy Hour", 0, 1, BOLD)));
         if (l.contains("leave") || l.contains("left") || l.contains("abandon") || l.contains("unhappy") || l.contains("cancel")) {
             tag = "[-]"; color = RED;
         } else if (l.contains("pay") || l.contains("paid")) {
