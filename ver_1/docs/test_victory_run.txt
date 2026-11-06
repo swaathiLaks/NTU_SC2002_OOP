@@ -3,7 +3,47 @@ STAGE 1 (reproducible) TEST RUN: VICTORY
 Objective: Revenue >= $45, Paid Customers >= 4, Avg Satisfaction >= 60
 =====================================================
 
-1. Input Sequence (Turn-by-Turn Commands):
+1. Input Sequence (Input these numbers):
+-----------------------------------------------------
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+
+
+2. Input Sequence (Turn-by-Turn Commands):
 -----------------------------------------------------
 Turn 1: Waiter = Seat Customer 1 (Table 1), Chef = Wait
 Turn 2: Waiter = Take Order Customer 1, Chef = Prepare Order 1
@@ -25,9 +65,9 @@ Turn 17: Waiter = Seat Customer 6 (Table 2), Chef = Wait
 Turn 18: Waiter = Take Order Customer 6, Chef = Prepare Order 6
 
 
-2. Final Verification at Turn 18:
+3. Final Verification at Turn 18:
 -----------------------------------------------------
-- Total Revenue: $75.00 (PASSED >= $45)
+- Total Revenue: $75.00 (PASSED >= $45) *note revenue may differ based on what items customers choose to buy
 - Paid Customers: 5 (PASSED >= 4)
 - Average Satisfaction of Paid Customers: 74.4 (PASSED >= 60)
 - Unhappy Departures: 0
