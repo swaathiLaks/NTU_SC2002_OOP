@@ -1,0 +1,74 @@
+=====================================================
+STAGE 2 (reproducible) TEST RUN: VICTORY
+Objective: Revenue >= $45, Paid Customers >= 4, Avg Satisfaction >= 60
+=====================================================
+
+1. Input Sequence (Input these numbers):
+-----------------------------------------------------
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+2
+1
+1
+1
+
+
+2. Input Sequence (Turn-by-Turn Commands):
+-----------------------------------------------------
+Turn 1: Waiter = Seat Customer 1 (Table 1), Chef = Wait
+Turn 2: Waiter = Take Order Customer 1, Chef = Prepare Order 1
+Turn 3: Waiter = Wait, Chef = Prepare Order 1
+Turn 4: Waiter = Serve Customer 1, Chef = Wait
+Turn 5: Waiter = Seat Customer 2 (Table 2), Chef = Wait
+Turn 6: Waiter = Take Order Customer 2, Chef = Prepare Order 2
+Turn 7: Waiter = Serve Customer 2, Chef = Wait
+Turn 8: Waiter = Seat Customer 3 (Table 1), Chef = Wait
+Turn 9: Waiter = Take Order Customer 3, Chef = Prepare Order 3
+Turn 10: Waiter = Serve Customer 3, Chef = Wait
+Turn 11: Waiter = Seat Customer 4 (Table 2), Chef = Wait
+Turn 12: Waiter = Take Order Customer 4, Chef = Prepare Order 4
+Turn 13: Waiter = Seat Customer 5 (Table 1), Chef = Prepare Order 4
+Turn 14: Waiter = Serve Customer 4, Chef = Wait
+Turn 15: Waiter = Take Order Customer 5, Chef = Prepare Order 5
+Turn 16: Waiter = Serve Customer 5, Chef = Wait
+Turn 17: Waiter = Seat Customer 6 (Table 2), Chef = Wait
+Turn 18: Waiter = Take Order Customer 6, Chef = Prepare Order 6
+
+
+3. Final Verification at Turn 18:
+-----------------------------------------------------
+- Total Revenue: $61.20 (PASSED >= $45) *note revenue may differ based on what items customers choose to buy
+- Paid Customers: 5 (PASSED >= 4)
+- Average Satisfaction of Paid Customers: 69.0 (PASSED >= 60)
+- Unhappy Departures: 0
+- End Result Display: VICTORY
