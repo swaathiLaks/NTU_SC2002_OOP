@@ -1,0 +1,94 @@
+=====================================================
+STAGE 3 (reproducible) TEST RUN: DEFEAT
+Objective: Verify failure condition handling and customer abandonment
+=====================================================
+
+1. Input Sequence (Input these numbers):
+-----------------------------------------------------
+1
+2
+2
+1
+1
+2
+2
+1
+1
+2
+2
+1
+1
+3
+3
+1
+1
+3
+3
+1
+1
+3
+3
+1
+1
+4
+4
+1
+1
+4
+4
+1
+1
+4
+4
+1
+1
+5
+5
+1
+1
+5
+5
+1
+1
+5
+5
+1
+1
+6
+6
+1
+1
+5
+5
+1
+1
+5
+5
+1
+1
+5
+5
+1
+1
+5
+5
+1
+1
+5
+5
+1
+
+
+2. Input Sequence:
+-----------------------------------------------------
+Turns 1 to 18: Select "Not Now" / "Wait" / Do nothing for all Manager, Host, Waiter and Chef choices.
+
+3. Verification Observations:
+-----------------------------------------------------
+- Turn 1–13: Arriving customers sit in queue with unserved satisfaction decreasing by -8 per turn for Regular customers, -5 per turn for VIP customers and -12 per turn for Critic customers.
+- In general, once satisfaction hits 0, customers leave restaurant without paying.
+- At the end of Turn 13, C1 (Regular) leaves without paying. At the end of Turn 15, C3 (Critic) leaves without paying.
+- Turn 18 Revenue: $0.00
+- Paid Customers: 0
+- Unhappy Departures: 2
+- End Result Display: DEFEAT

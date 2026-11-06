@@ -1,0 +1,95 @@
+=====================================================
+STAGE 3 (reproducible) TEST RUN: VICTORY
+Objective: Revenue >= $45, Paid Customers >= 4, Avg Satisfaction >= 60
+=====================================================
+
+1. Input Sequence (Input these numbers):
+-----------------------------------------------------
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+1
+1
+1
+2
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+
+2. Input Sequence (Turn-by-Turn Commands):
+-----------------------------------------------------
+Turn 1: Manager = Not Now, Host = Seat customer C1 at table T1, Waiter = Take order at table T1 (C1), Chef = Prepare Order 1
+Turn 2: Manager = Not Now, Host = Wait, Waiter = Wait, Chef = Prepare Order 1
+Turn 3: Manager = Not Now, Host = Wait, Waiter = Serve Order 1 to C1, Chef = Wait
+Turn 4: Manager = Start Happy Hour, Host = Seat customer C2 at table T2, Waiter = Take order at table T2 (C2), Chef = Prepare Order 2
+Turn 5: Host = Wait, Waiter = Wait, Chef = Prepare Order 2
+Turn 6: Host = Wait, Waiter = Wait, Chef = Prepare Order 2
+Turn 7: Host = Seat customer C3 at table T1, Waiter = Serve Order 2 to C2, Chef = Wait
+Turn 8: Host = Wait, Waiter = Take order at table T1 (C3), Chef = Prepare Order 3
+Turn 9: Host = Wait, Waiter = Wait, Chef = Prepare Order 3
+Turn 10: Host = Seat customer C4 at table T2, Waiter = Serve Order 3 to C3, Chef = Wait
+Turn 11: Host = Wait, Waiter = Take order at table T2 (C4), Chef = Prepare Order 4
+Turn 12: Host = Wait, Waiter = Wait, Chef = Prepare Order 4
+Turn 13: Host = Seat customer C5 at table T1, Waiter = Serve Order 4 to C4, Chef = Wait
+Turn 14: Host = Wait, Waiter = Take order at table T1 (C5), Chef = Prepare Order 5
+Turn 15: Host = Wait, Waiter = Wait, Chef = Prepare Order 5
+Turn 16: Host = Seat customer C6 at table T2, Waiter = Take order at table T2 (C6), Chef = Prepare Order 5
+Turn 17: Host = Wait, Waiter = Serve Order 5 to C5, Chef = Prepare Order 6
+Turn 18: Host = Wait, Waiter = Wait, Chef = Prepare Order 6
+
+
+3. Final Verification at Turn 18:
+-----------------------------------------------------
+- Total Revenue: $75.10 (PASSED >= $45) *note revenue may differ based on what items customers choose to buy
+- Paid Customers: 5 (PASSED >= 4)
+- Average Satisfaction of Paid Customers: 78.5 (PASSED >= 60)
+- Unhappy Departures: 0
+- End Result Display: VICTORY
