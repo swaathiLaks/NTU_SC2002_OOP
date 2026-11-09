@@ -15,13 +15,13 @@ from Stage 1. With seed 3 the orders are: C1 Pasta, C2 Pasta, C3 Pasta (Critic r
 
 Run each test from the `ver_2` folder after compiling (see README).
 Each input file has one menu number per line (Waiter choice, then Chef choice, for each turn).
-In Git Bash: `java -cp out app.Main < docs/victory-input.txt`.
-In PowerShell: `Get-Content docs\victory-input.txt | java -cp out app.Main`.
+In Git Bash: `java -cp out app.Main < docs/test_victory_run_ver2.txt`.
+In PowerShell: `Get-Content docs\test_victory_run_ver2.txt | java -cp out app.Main`.
 
 ## Run 1: Victory with a VIP and a Critic (reproducible)
 
 ```
-java -cp out app.Main < docs/victory-input.txt
+java -cp out app.Main < docs/test_victory_run_ver2.txt
 ```
 
 Strategy: Waiter serves a READY order first, otherwise takes an order, otherwise seats the next customer.
@@ -46,7 +46,7 @@ Points to notice:
 ## Run 2: Defeat (reproducible)
 
 ```
-java -cp out app.Main < docs/defeat-input.txt
+java -cp out app.Main < docs/test_defeat_run_ver2.txt
 ```
 
 Strategy: every staff member chooses Wait every turn.

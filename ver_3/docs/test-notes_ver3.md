@@ -8,13 +8,13 @@ Each input file has one menu number per line. Each turn needs, in this order:
 1. the Happy Hour answer (`1` = not now, `2` = start), **only while Happy Hour is still unused**;
 2. the Host choice, then the Waiter choice, then the Chef choice.
 
-In Git Bash: `java -cp out app.Main < docs/victory-input.txt`.
-In PowerShell: `Get-Content docs\victory-input.txt | java -cp out app.Main`.
+In Git Bash: `java -cp out app.Main < docs/test_victory_run_ver3.txt`.
+In PowerShell: `Get-Content docs\test_victory_run_ver3.txt | java -cp out app.Main`.
 
 ## Run 1: Victory with a Host, combos and Happy Hour (reproducible)
 
 ```
-java -cp out app.Main < docs/victory-input.txt
+java -cp out app.Main < docs/test_victory_run_ver3.txt
 ```
 
 Strategy: Happy Hour is started on turn 4, when the VIP arrives. Every turn the Host seats the next queued customer.
@@ -43,7 +43,7 @@ Points to notice:
 ## Run 2: Defeat (reproducible)
 
 ```
-java -cp out app.Main < docs/defeat-input.txt
+java -cp out app.Main < docs/test_defeat_run_ver3.txt
 ```
 
 Strategy: the manager never starts Happy Hour and every staff member (Host, Waiter, Chef) chooses Wait every turn.
@@ -100,7 +100,7 @@ java -cp out:out-test entity.Stage3Checks
 On Windows use `;` instead of `:` in the classpath. Expected last line: `ALL PASSED`.
 
 `test/StrategySweep.java` plays a whole game with the scripted manager above and prints one result line. It also wrote
-`docs/victory-input.txt` and `docs/defeat-input.txt` (it regenerates them byte for byte):
+`test_victory_run_ver3.txt` and `test_defeat_run_ver3.txt` (it regenerates them byte for byte):
 
 ```
 javac -cp out -d out-test test/StrategySweep.java
