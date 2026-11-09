@@ -9,8 +9,8 @@ import java.util.List;
 
 // New file added in Stage 3
 // Plays a whole game through GameController with a fixed, scripted manager, so the table in docs/test-notes.md
-// can be reproduced. It also writes the menu numbers it chose, which is how docs/victory-input.txt and
-// docs/defeat-input.txt were made. Not part of the game itself.
+// can be reproduced. It also writes the menu numbers it chose, which is how parts of docs/test_victory_run_ver3.txt and
+// docs/test_defeat_run_ver3.txt were made. Not part of the game itself.
 //
 // Usage: java -cp out:out-test StrategySweep <happyHourTurn> <useHost> [inputFileToWrite]
 //   happyHourTurn: turn to start Happy Hour on, 0 = never, -1 = everyone always chooses Wait (the defeat run)
