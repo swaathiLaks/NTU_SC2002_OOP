@@ -27,3 +27,6 @@ Customers choose food uniformly at random from the menu using new Random(config.
 
 ## Tests
 See [docs/test-notes.md](docs/test-notes.md) for the reproducible victory and defeat runs.
+
+## AI History
+- [Chia Kei Yin: AI Logs](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/ai-history/Chia_Kei_Yin/ver_1/ai-history/ai_conversation_log_stage_1_chia_kei_yin.md)
