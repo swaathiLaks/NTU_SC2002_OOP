@@ -73,4 +73,4 @@ See [docs/test-notes.md](docs/test-notes.md) for the reproducible victory and de
 (both include a VIP and a Critic).
 
 ## AI History
-- [Chia Kei Yin: AI Logs](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/ai-history/Chia_Kei_Yin/ver_2/ai-history/ai_conversation_log_stage_2_chia_kei_yin.md)
+- [Chia Kei Yin: AI Logs](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/ai-history/Chia_Kei_Yin/ai-history_Chia_Kei_Yin/stage-2/chat-01_Chia_Kei_Yin.md)
