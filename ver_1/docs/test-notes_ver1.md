@@ -6,7 +6,7 @@ Run each test from the `ver_1` folder after compiling (see README).
 Each input file has one menu number per line (Waiter choice, then Chef choice, for each turn).
 
 ## Run 1: Victory (reproducible)
-java -cp out app.Main < docs/test_victory_run_ver1.txt
+In Git Bash: `java -cp out app.Main < docs/test_victory_run_ver1.txt`.
 
 Strategy: Waiter serves a READY order first, otherwise takes an order, otherwise seats the next customer. Chef always works on the oldest order in the kitchen.
 
@@ -16,7 +16,7 @@ Expected result:
 | 5 | $69.00 | 74.4 | 0 | VICTORY |
 
 ## Run 2: Defeat (reproducible)
-java -cp out app.Main < docs/test_defeat_run_ver1.txt
+In Git Bash: `java -cp out app.Main < docs/test_defeat_run_ver1.txt`.
 
 Strategy: every staff member chooses Wait every turn.
 
