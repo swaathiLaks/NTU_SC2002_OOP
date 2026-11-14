@@ -1,10 +1,4 @@
-=====================================================
-STAGE 3 (reproducible) TEST RUN: DEFEAT
-Objective: Verify failure condition handling and customer abandonment
-=====================================================
 
-1. Input Sequence (Input these numbers):
------------------------------------------------------
 1
 2
 2
