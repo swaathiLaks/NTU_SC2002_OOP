@@ -10,11 +10,15 @@ Each input file has one menu number per line. Each turn needs, in this order:
 
 In Git Bash: `java -cp out app.Main < docs/test_victory_run_ver3.txt`.
 In PowerShell: `Get-Content docs\test_victory_run_ver3.txt | java -cp out app.Main`.
+OR `Get-Content ../docs/test_victory_run_ver3.txt | java -cp out app/Main.java`
 
 ## Run 1: Victory with a Host, combos and Happy Hour (reproducible)
 
 ```
 java -cp out app.Main < docs/test_victory_run_ver3.txt
+
+Get-Content ../docs/test_victory_run_ver3.txt | java -cp out app/Main.java
+
 ```
 
 Strategy: Happy Hour is started on turn 4, when the VIP arrives. Every turn the Host seats the next queued customer.
