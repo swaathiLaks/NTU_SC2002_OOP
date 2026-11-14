@@ -141,7 +141,7 @@ The Chef, kitchen and serving code did not need to change for combos, because `C
 
 ## Tests
 
-See [docs/test-notes.md](docs/test-notes.md) for the reproducible victory and defeat runs, how the manager's choices change
+See [docs/test-notes_ver3.md](docs/test-notes_ver3.md) for the reproducible victory and defeat runs, how the manager's choices change
 the result, and how to run `test/entity/Stage3Checks.java` and `test/StrategySweep.java`.
 
 ## AI History

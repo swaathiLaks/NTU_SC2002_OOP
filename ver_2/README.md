@@ -69,7 +69,7 @@ Unchanged: Statistics, ResultEvaluator, all staff classes except PrepareAction a
 
 ## Tests
 
-See [docs/test-notes.md](docs/test-notes.md) for the reproducible victory and defeat runs
+See [docs/test-notes_ver2.md](docs/test-notes_ver2.md) for the reproducible victory and defeat runs
 (both include a VIP and a Critic).
 
 ## AI History
