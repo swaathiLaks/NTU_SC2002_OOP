@@ -143,6 +143,3 @@ The Chef, kitchen and serving code did not need to change for combos, because `C
 
 See [docs/test-notes_ver3.md](docs/test-notes_ver3.md) for the reproducible victory and defeat runs, how the manager's choices change
 the result, and how to run `test/entity/Stage3Checks.java` and `test/StrategySweep.java`.
-
-## AI History
-- [Chia Kei Yin: AI Logs](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/ai-history/Chia_Kei_Yin/ai-history_Chia_Kei_Yin/stage-3/chat-01_Chia_Kei_Yin.md)
