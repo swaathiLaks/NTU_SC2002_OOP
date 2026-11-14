@@ -67,7 +67,7 @@ Turn 18: Waiter = Take Order Customer 6, Chef = Prepare Order 6
 
 3. Final Verification at Turn 18:
 -----------------------------------------------------
-- Total Revenue: $75.00 (PASSED >= $45) *note revenue may differ based on what items customers choose to buy
+- Total Revenue: $69.00 (PASSED >= $45)
 - Paid Customers: 5 (PASSED >= 4)
 - Average Satisfaction of Paid Customers: 74.4 (PASSED >= 60)
 - Unhappy Departures: 0

@@ -85,11 +85,10 @@ Turn 16: Host = Seat customer C6 at table T2, Waiter = Take order at table T2 (C
 Turn 17: Host = Wait, Waiter = Serve Order 5 to C5, Chef = Prepare Order 6
 Turn 18: Host = Wait, Waiter = Wait, Chef = Prepare Order 6
 
-
 3. Final Verification at Turn 18:
 -----------------------------------------------------
-- Total Revenue: $75.10 (PASSED >= $45) *note revenue may differ based on what items customers choose to buy
-- Paid Customers: 5 (PASSED >= 4)
+- Total Revenue: $75.10 (PASSED >= $45)
+- Paid Customers: 4 (PASSED >= 4)
 - Average Satisfaction of Paid Customers: 78.5 (PASSED >= 60)
 - Unhappy Departures: 0
 - End Result Display: VICTORY
