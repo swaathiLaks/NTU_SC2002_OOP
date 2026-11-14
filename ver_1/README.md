@@ -26,7 +26,4 @@ javac --release 17 -d out src/app/*.java src/boundary/*.java src/control/*.java 
 Customers choose food uniformly at random from the menu using new Random(config.seed()) owned by Restaurant (see Customer.chooseItem). The same seed always gives the same choices.
 
 ## Tests
-See [docs/test-notes.md](docs/test-notes.md) for the reproducible victory and defeat runs.
-
-## AI History
-- [Chia Kei Yin: AI Logs](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/ai-history/Chia_Kei_Yin/ver_1/ai-history/ai_conversation_log_stage_1_chia_kei_yin.md)
+See [docs/test-notes_ver1.md](docs/test-notes_ver1.md) for the reproducible victory and defeat runs.
