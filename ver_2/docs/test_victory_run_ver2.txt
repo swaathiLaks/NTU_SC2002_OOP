@@ -1,10 +1,4 @@
-=====================================================
-STAGE 2 (reproducible) TEST RUN: VICTORY
-Objective: Revenue >= $45, Paid Customers >= 4, Avg Satisfaction >= 60
-=====================================================
 
-1. Input Sequence (Input these numbers):
------------------------------------------------------
 1
 1
 1
