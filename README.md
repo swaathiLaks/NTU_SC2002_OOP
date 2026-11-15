@@ -30,6 +30,7 @@ All diagrams are SVG files in [docs/svg_format](https://github.com/swaathiLaks/N
 | Figure 10.1 | Detailed Stage 1 class diagram (Appendix B) | [detail_full_stage1.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage1.svg) |
 | Figure 10.2 | Detailed Stage 2 class diagram (Appendix B) | [detail_full_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage2.svg) |
 | Figure 10.3 / Figure 4.1 | Detailed Stage 3 class diagram (Section 4.1 and Appendix B) | [detail_full_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage3.svg) |
+| Section 4.7 | Annotated Stage 3 Class diagram | [detail_full_stage3_annotated.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage3_annotated.svg) |
 | Appendix B | Detailed Stage 3 class diagram, annotated | [detail_full_stage3_annotated.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage3_annotated.svg) |
 | Figure 3.1 | Simplified Stage 1 overview | [overview_stage1.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/overview_stage1.svg) |
 | Figure 3.2.1 | Simplified Stage 2 overview | [overview_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/overview_stage2.svg) |
