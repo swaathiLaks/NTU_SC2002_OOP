@@ -8,9 +8,9 @@ Repository: https://github.com/swaathiLaks/NTU_SC2002_OOP
 
 | Stage | Folder | Release tag | What it adds |
 |---|---|---|---|
-| 1. Basic operation | [ver_1](ver_1/README.md) | [v1.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/Stage-1) | Regular customers, menu, Waiter, Chef, Cashier, full turn sequence, victory and defeat |
-| 2. Customer behaviour | [ver_2](ver_2/README.md) | [v2.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/Stage-2) | VIP and Critic customers |
-| 3. New role and menu policy | [ver_3](ver_3/README.md) | [v3.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/Stage-3) | Host, ComboMeal, Happy Hour |
+| 1. Basic operation | [ver_1](ver_1/README.md) | [v1.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v1.0.0) | Regular customers, menu, Waiter, Chef, Cashier, full turn sequence, victory and defeat |
+| 2. Customer behaviour | [ver_2](ver_2/README.md) | [v2.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v2.0.0) | VIP and Critic customers |
+| 3. New role and menu policy | [ver_3](ver_3/README.md) | [v3.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v3.0.0) | Host, ComboMeal, Happy Hour |
 
 Each folder builds and runs on its own. See the README inside each folder for the build commands and test runs.
 
@@ -18,38 +18,39 @@ Each folder builds and runs on its own. See the README inside each folder for th
 
 | Transition | Compare view | File-by-file table with reasons |
 |---|---|---|
-| Stage 1 → 2 | [v1.0.0...v2.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/3710f5247f01d43ae8c45f09ac3e0e12a57d713d...27ebbd7b5dd381a39c849849a17c79b3dd801eeb) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
-| Stage 2 → 3 | [v2.0.0...v3.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/7bde336a99b71d1862ca93ffdef19a85df8f5cd2...8c10fec2342e5ba5218f5e62c62e2e333d5d55a2) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
+| Stage 1 → 2 | [v1.0.0...v2.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/v1.0.0...v2.0.0) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
+| Stage 2 → 3 | [v2.0.0...v3.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/v2.0.0...v3.0.0) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
 
 ## Diagrams
 
-All diagrams are SVG files in [docs/svg_format](https://github.com/swaathiLaks/NTU_SC2002_OOP/tree/main/docs/svg_format).
+All diagrams are SVG files in [docs/svg_format](https://github.com/swaathiLaks/NTU_SC2002_OOP/tree/main/docs/svg_format). This table follows Table 10.1 in the report.
 
-| Group | Diagram | Link |
+| Label in report | Diagram | Link |
 |---|---|---|
-| Class diagrams: full | Stage 1 full class diagram | [detail_full_stage1.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage1.svg) |
-|  | Stage 2 full class diagram | [detail_full_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage2.svg) |
-|  | Stage 3 full class diagram | [detail_full_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage3.svg) |
-| Class diagrams: overview | Stage 1 overview | [overview_stage1.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/overview_stage1.svg) |
-|  | Stage 2 overview | [overview_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/overview_stage2.svg) |
-|  | Stage 3 overview | [overview_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/overview_stage3.svg) |
-| Class diagrams: by package | Entity package, Stage 1 | [detail_entity_stage1.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_entity_stage1.svg) |
-|  | Entity package, Stage 2 | [detail_entity_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_entity_stage2.svg) |
-|  | Entity package, Stage 3 | [detail_entity_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_entity_stage3.svg) |
-|  | Staff package and Menu classes, Stage 3 | [detail_staff_menu_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_staff_menu_stage3.svg) |
-|  | Control package, Stage 3 | [detail_control_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_control_stage3.svg) |
-|  | Boundary package, Stage 3 | [detail_boundary_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_boundary_stage3.svg) |
-| Stage changes | Changes from Stage 1 to Stage 2 | [changes_stage1_to_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/changes_stage1_to_stage2.svg) |
-|  | Changes from Stage 2 to Stage 3 | [changes_stage2_to_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/changes_stage2_to_stage3.svg) |
-| Sequence diagram | Complete sequence diagram for stage 3 | [seq_diagram.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_diagram.svg) |
-|  | Part A: arrival and manager decisions | [seq_4_1a_arrival_and_decisions.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1a_arrival_and_decisions.svg) |
-|  | Part B: order and kitchen | [seq_4_1b_order_and_kitchen.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1b_order_and_kitchen.svg) |
-|  | Part C: cooking turns | [seq_4_1c_cooking_turns.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1c_cooking_turns.svg) |
-|  | Part D: serving, payment and result | [seq_4_1d_serve_pay_result.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1d_serve_pay_result.svg) |
-| Other diagrams | Turn flow | [turn_flow.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/turn_flow.svg) |
-|  | Pricing pipeline | [pricing_pipeline.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/pricing_pipeline.svg) |
-|  | Customer states | [states_customer.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/states_customer.svg) |
-|  | Order states | [states_order.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/states_order.svg) |
+| Figure 10.1 | Detailed Stage 1 class diagram (Appendix B) | [detail_full_stage1.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage1.svg) |
+| Figure 10.2 | Detailed Stage 2 class diagram (Appendix B) | [detail_full_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage2.svg) |
+| Figure 10.3 / Figure 4.1 | Detailed Stage 3 class diagram (Section 4.1 and Appendix B) | [detail_full_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage3.svg) |
+| Appendix B | Detailed Stage 3 class diagram, annotated | [detail_full_stage3_annotated.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_full_stage3_annotated.svg) |
+| Figure 3.1 | Simplified Stage 1 overview | [overview_stage1.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/overview_stage1.svg) |
+| Figure 3.2.1 | Simplified Stage 2 overview | [overview_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/overview_stage2.svg) |
+| Figure 3.3.1 | Simplified Stage 3 overview | [overview_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/overview_stage3.svg) |
+| Appendix B | Entity package, Stage 1 | [detail_entity_stage1.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_entity_stage1.svg) |
+| Appendix B | Entity package, Stage 2 | [detail_entity_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_entity_stage2.svg) |
+| Figure 4.2 | Entity package, Stage 3 | [detail_entity_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_entity_stage3.svg) |
+| Figure 4.3 | Staff package and Menu classes, Stage 3 | [detail_staff_menu_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_staff_menu_stage3.svg) |
+| Figure 4.4 | Control package, Stage 3 | [detail_control_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_control_stage3.svg) |
+| Figure 4.5 | Boundary package, Stage 3 | [detail_boundary_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_boundary_stage3.svg) |
+| Figure 3.2.2 | Class changes from Stage 1 to Stage 2 | [changes_stage1_to_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/changes_stage1_to_stage2.svg) |
+| Figure 3.3.2 | Class changes from Stage 2 to Stage 3 | [changes_stage2_to_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/changes_stage2_to_stage3.svg) |
+| Section 5.2 | Complete sequence diagram, Stage 3 | [seq_diagram.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_diagram.svg) |
+| Figure 5.3.1 | Sequence diagram, part A: arrival and manager decisions | [seq_4_1a_arrival_and_decisions.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1a_arrival_and_decisions.svg) |
+| Figure 5.3.2 | Sequence diagram, part B: order and kitchen | [seq_4_1b_order_and_kitchen.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1b_order_and_kitchen.svg) |
+| Figure 5.3.3 | Sequence diagram, part C: cooking turns | [seq_4_1c_cooking_turns.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1c_cooking_turns.svg) |
+| Figure 5.3.4 | Sequence diagram, part D: serving, payment and result | [seq_4_1d_serve_pay_result.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1d_serve_pay_result.svg) |
+| Figure 1.2 | Turn flow: the six steps of each turn and their methods | [turn_flow.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/turn_flow.svg) |
+| Figure 4.6 | Pricing pipeline | [pricing_pipeline.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/pricing_pipeline.svg) |
+| Appendix B | Customer states (entity package state machine) | [states_customer.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/states_customer.svg) |
+| Appendix B | Order states (entity package state machine) | [states_order.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/states_order.svg) |
 
 ## Video
 
