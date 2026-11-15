@@ -41,7 +41,8 @@ All diagrams are SVG files in [docs/svg_format](https://github.com/swaathiLaks/N
 |  | Boundary package, Stage 3 | [detail_boundary_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/detail_boundary_stage3.svg) |
 | Stage changes | Changes from Stage 1 to Stage 2 | [changes_stage1_to_stage2.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/changes_stage1_to_stage2.svg) |
 |  | Changes from Stage 2 to Stage 3 | [changes_stage2_to_stage3.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/changes_stage2_to_stage3.svg) |
-| Sequence diagram | Part A: arrival and manager decisions | [seq_4_1a_arrival_and_decisions.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1a_arrival_and_decisions.svg) |
+| Sequence diagram | Complete sequence diagram for stage 3 | [seq_diagram.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_diagram.svg) |
+|  | Part A: arrival and manager decisions | [seq_4_1a_arrival_and_decisions.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1a_arrival_and_decisions.svg) |
 |  | Part B: order and kitchen | [seq_4_1b_order_and_kitchen.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1b_order_and_kitchen.svg) |
 |  | Part C: cooking turns | [seq_4_1c_cooking_turns.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1c_cooking_turns.svg) |
 |  | Part D: serving, payment and result | [seq_4_1d_serve_pay_result.svg](https://github.com/swaathiLaks/NTU_SC2002_OOP/blob/main/docs/svg_format/seq_4_1d_serve_pay_result.svg) |
