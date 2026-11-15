@@ -18,8 +18,8 @@ Each folder builds and runs on its own. See the README inside each folder for th
 
 | Transition | Compare view | File-by-file table with reasons |
 |---|---|---|
-| Stage 1 → 2 | [Stage-1...Stage-2](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/Stage-1...Stage-2) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
-| Stage 2 → 3 | [Stage-2...Stage-3](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/Stage-2...Stage-3) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
+| Stage 1 → 2 | [Stage-1...Stage-2](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/3710f5247f01d43ae8c45f09ac3e0e12a57d713d...27ebbd7b5dd381a39c849849a17c79b3dd801eeb) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
+| Stage 2 → 3 | [Stage-2...Stage-3](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/7bde336a99b71d1862ca93ffdef19a85df8f5cd2...8c10fec2342e5ba5218f5e62c62e2e333d5d55a2) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
 
 ## Diagrams
 
