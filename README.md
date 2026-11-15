@@ -8,9 +8,9 @@ Repository: https://github.com/swaathiLaks/NTU_SC2002_OOP
 
 | Stage | Folder | Release tag | What it adds |
 |---|---|---|---|
-| 1. Basic operation | [ver_1](ver_1/README.md) | [Stage-1](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v1.0.0) | Regular customers, menu, Waiter, Chef, Cashier, full turn sequence, victory and defeat |
-| 2. Customer behaviour | [ver_2](ver_2/README.md) | [Stage-2](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v2.0.0) | VIP and Critic customers |
-| 3. New role and menu policy | [ver_3](ver_3/README.md) | [Stage-3](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v3.0.0) | Host, ComboMeal, Happy Hour |
+| 1. Basic operation | [ver_1](ver_1/README.md) | [Stage-1](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/Stage-1) | Regular customers, menu, Waiter, Chef, Cashier, full turn sequence, victory and defeat |
+| 2. Customer behaviour | [ver_2](ver_2/README.md) | [Stage-2](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/Stage-2) | VIP and Critic customers |
+| 3. New role and menu policy | [ver_3](ver_3/README.md) | [Stage-3](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/Stage-3) | Host, ComboMeal, Happy Hour |
 
 Each folder builds and runs on its own. See the README inside each folder for the build commands and test runs.
 
