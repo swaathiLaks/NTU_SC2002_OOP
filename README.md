@@ -8,9 +8,9 @@ Repository: https://github.com/swaathiLaks/NTU_SC2002_OOP
 
 | Stage | Folder | Release tag | What it adds |
 |---|---|---|---|
-| 1. Basic operation | [ver_1](ver_1/README.md) | [v1.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v1.0.0) | Regular customers, menu, Waiter, Chef, Cashier, full turn sequence, victory and defeat |
-| 2. Customer behaviour | [ver_2](ver_2/README.md) | [v2.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v2.0.0) | VIP and Critic customers |
-| 3. New role and menu policy | [ver_3](ver_3/README.md) | [v3.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v3.0.0) | Host, ComboMeal, Happy Hour |
+| 1. Basic operation | [ver_1](ver_1/README.md) | [Stage-1](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v1.0.0) | Regular customers, menu, Waiter, Chef, Cashier, full turn sequence, victory and defeat |
+| 2. Customer behaviour | [ver_2](ver_2/README.md) | [Stage-2](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v2.0.0) | VIP and Critic customers |
+| 3. New role and menu policy | [ver_3](ver_3/README.md) | [Stage-3](https://github.com/swaathiLaks/NTU_SC2002_OOP/releases/tag/v3.0.0) | Host, ComboMeal, Happy Hour |
 
 Each folder builds and runs on its own. See the README inside each folder for the build commands and test runs.
 
@@ -18,8 +18,8 @@ Each folder builds and runs on its own. See the README inside each folder for th
 
 | Transition | Compare view | File-by-file table with reasons |
 |---|---|---|
-| Stage 1 → 2 | [v1.0.0...v2.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/v1.0.0...v2.0.0) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
-| Stage 2 → 3 | [v2.0.0...v3.0.0](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/v2.0.0...v3.0.0) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
+| Stage 1 → 2 | [Stage-1...Stage-2](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/Stage-1...Stage-2) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
+| Stage 2 → 3 | [Stage-2...Stage-3](https://github.com/swaathiLaks/NTU_SC2002_OOP/compare/Stage-2...Stage-3) | [ver_3/README.md, Stage comparisons](ver_3/README.md#stage-comparisons) |
 
 ## Diagrams
 
